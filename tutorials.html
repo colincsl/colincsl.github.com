@@ -1,0 +1,178 @@
+<html>
+<head>
+	<title>Colin Lea</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+	<!--<script src="/ColinLea/prototype.js"></script>-->
+	
+	
+	<script id="main" type="text/javascript">
+  	
+	var info = {}
+  	$.getJSON('tutorials.json', function(data){
+  		info = data;
+  	});
+  	
+  	setTimeout("tutorials()", 2500);
+  	
+  	
+ 	var name, year, period, description, tag, place, url, img, header, major;
+ 	var newTitle, newPara, newPara2, newText, div, newDiv, newRow, newContainer, newImg;	
+ 	
+ 	
+ 	var tagSet = ["Robotics", "Vision", "Haptics", "Other", "Class","UB Robotics Club", "Visual and Perceptual Machines Lab", "Field Robotics Center", "Automation & Robotics Lab"]; 
+ 	var years = [2007, 2008, 2009, 2010, 2011, 2012];
+  	
+  	function tutorials(){
+  		//alert("s");
+  		div = document.getElementById('proj');  
+  		if (!div){alert("Error");};
+  		//alert("s");
+  		// Differentiate major and minor projects
+  		// for (var i_maj=0; i_maj<2; i_maj++){
+  			// //alert("s");
+  			// newTitle = document.createElement("h3");
+  			// div.appendChild(document.createElement("hr"));
+		  	// //alert("s");
+			// if (i_maj == 0){		  	 	
+		  	 	// newText = document.createTextNode("Major Projects:");
+		  	 // } else {
+		  	 	// newText = document.createTextNode("Minor Projects:");
+		  	 // }
+		  	// newTitle.appendChild(newText);
+	  		// div.appendChild(newTitle);
+
+	  		for (var i=0; i<info.Projects.length; i++){
+	  			
+	  			// Extract project data
+		  		name = info.Projects[i].name;
+		  	 	year = info.Projects[i].year;
+		  	 	period = info.Projects[i].period;
+		  	 	//place = info.Projects[i].place;
+		  	 	tags = info.Projects[i].tags;
+		  	 	description = info.Projects[i].description;
+		  	 	url = info.Projects[i].url;
+		  	 	img = info.Projects[i].img;
+		  	 	
+		  	 	// if (info.Projects[i].major == undefined){
+		  	 		// major = 0;
+		  	 	// } else {
+		  	 		// major = info.Projects[i].major;
+		  	 	// }
+// 			  	 
+			  	// if ((major == 0 && i_maj == 0) || (major == 1 && i_maj == 1)){
+			  	 	// continue;
+			  	 // }
+	
+			 	
+		  	 	// Change name color for robotics/vision/other
+		  	 	for (j_var in tags){
+			  	 	if (tags[j_var] == "Robotics"){header = "h4"; break;}
+			  	 	else if (tags[j_var] == "Vision"){header = "h5"; break;}
+			  	 	else {header = "h6";}
+			  	 }
+		  	 	
+		  	 	//Add row
+		  	 	newContainer = document.createElement('div');
+		  	 	newContainer.id = "container";
+		  	 	newRow = document.createElement('div');
+		  	 	newRow.id = "row";
+		  	 	
+		  	 	//Add title
+		  	 	newTitle = document.createElement(header);
+		  	 	newPara = document.createElement('div');
+		  	 	newPara.id = "left";
+		  	 	var txt = name + " (" + period + " " + year + ")"
+		  		newText = document.createTextNode(txt);
+		  		newTitle.appendChild(newText);
+		  		newContainer.appendChild(newTitle);
+		  		
+		  		
+		  		//Add description
+		  		newText = document.createTextNode(description);
+		  		newPara.appendChild(newText);
+		  		newPara2 = document.createElement('p');
+		  		var tag_txt = "";
+		  		for (j_var in tags){
+		  			tag_txt += tags[j_var];
+		  			if (tags[j_var] != tags[tags.length-1]) {tag_txt += ", ";}
+		  		}
+		  		newText = document.createTextNode("Tags: " + tag_txt);
+		  		newPara2.appendChild(newText);
+		  		newPara.appendChild(newPara2);
+	
+				//alert(name + " (" + period + " " + year + ")");	  		
+		  		if (url.length > 0){
+			  		var newPara3 = document.createElement('p');
+			  		var newLink = document.createElement('a');
+			  		newLink.href = url[1];
+			  		newLink.appendChild(document.createTextNode("Documentation"));
+			  		newPara3.appendChild(newLink);
+			  		newPara.appendChild(newPara3);
+				}	  		
+		  		newRow.appendChild(newPara);
+		  		
+		  		//Add img
+		  		if (img.length>0){
+			  		newImg = document.createElement('div');
+			  	 	newImg.id = "right";
+			  		var elem = document.createElement("img");
+					elem.setAttribute("src", img);
+					elem.setAttribute("height", "175");
+					elem.setAttribute("alt", name);
+					elem.id = "proj";
+			  		newImg.appendChild(elem);
+			  		newRow.appendChild(newImg);
+				}
+				newContainer.appendChild(newRow);
+				  		
+		  		div.appendChild(newContainer);
+		  		div.appendChild(document.createElement("br"));
+		  		div.appendChild(document.createElement("br"));
+		  	//}
+	  		//alert("h2");
+	  		
+	  	}
+   }
+   
+   
+  </script>
+
+<!--<?php include("/ColinLea/home.html") ?>-->
+<!-- - - - - - - - - - - - - - - - - HEADER  - - - - - - - - - - - - - - - - -->
+<html>
+    <head>
+        <title>Colin Lea</title>
+        <link rel="stylesheet" href="/style.css" type="text/css">
+    </head>
+    
+    <!-- - - - - - - - - - - - - - - - - HEADER  - - - - - - - - - - - - - - - - -->
+    <header>
+        <br>
+        <h1>Colin Lea <img src="/ColinLea_orange.png" alt="Colin Lea" height=100px/></h1>
+        <h2> <i> robotics . computer vision . machine learning</i> </h2>
+        
+        <ul class="centered">
+            <li class="header"><a id="nav" href="/index.html">home</a></li>
+            <li class="header"><a id="nav" href="/projects.html">projects</a></li>
+            <li class="header"><a id="nav" href="/tutorials.html">tutorials</a></li>
+            <li class="header"><a id="nav" href="http://colinlea.posterous.com">blog</a></li>
+        </ul>
+        
+        </nav>
+    </header>
+<!-- - - - - - - - - - - - - - - - - /HEADER  - - - - - - - - - - - - - - - - -->
+	
+<br>
+<div id="proj">
+<h3>Tutorials:</h3>
+</div>
+<br>
+	
+	<!-- <div id="proj">
+			
+	</div> -->
+	
+	<br><br><br><br><br><br>
+</body>
+</html>

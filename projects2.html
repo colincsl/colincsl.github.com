@@ -1,0 +1,235 @@
+<html>
+<head>
+	<title>Colin Lea</title>
+	<link rel="stylesheet" href="/ColinLea/style2.css" type="text/css">
+	<script type="text/javascript" src="/ColinLea/jquery-1.6.2.min.js"></script>
+	<!--<script src="/ColinLea/prototype.js"></script>-->
+	
+	
+	<script id="main" type="text/javascript">
+  	
+	var info = {}
+  	$.getJSON('/ColinLea/projects.json', function(data){
+  		info = data;
+  	});
+  	
+  	setTimeout("projects()", 100);
+  
+  	
+  	
+ 	var name, year, period, description, tag, place, url, img, header, major;
+ 	var newTitle, newPara, newPara2, newText, div, newDiv, newRow, newContainer, newImg;	
+ 	
+ 	
+ 	var tagSet = ["Robotics", "Vision", "Haptics", "Other", "Class","UB Robotics Club", "Visual and Perceptual Machines Lab", "Field Robotics Center", "Automation & Robotics Lab"]; 
+ 	var years = [2007, 2008, 2009, 2010, 2011, 2012];
+  	
+  	function projects(){
+  		//alert("s");
+  		div = document.getElementById('proj');  
+  		if (!div){alert("Error");};
+  		//alert("s");
+  		// Differentiate major and minor projects
+  		// for (var i_maj=0; i_maj<2; i_maj++){
+  			// //alert("s");
+  			// newTitle = document.createElement("h3");
+  			// div.appendChild(document.createElement("hr"));
+		  	// //alert("s");
+			// if (i_maj == 0){		  	 	
+		  	 	// newText = document.createTextNode("Major Projects:");
+		  	 // } else {
+		  	 	// newText = document.createTextNode("Minor Projects:");
+		  	 // }
+		  	// newTitle.appendChild(newText);
+	  		// div.appendChild(newTitle);
+
+			newContainer = document.createElement('div');
+		  	newContainer.id = "container";
+		  	
+		  	/* Format:
+	  			 * 
+	  			 * --------------------
+	  			 * img		| img	| img
+	  			 * title	| title	| title
+	  			 * date		| date 	| date
+	  			 * --------------------
+	  			 * 
+	  			 *  Container{
+	  			 * 			Row:
+	  			 * 				item
+	  			 * 				item
+	  			 * 				item
+	  			 * 			Row: ...
+	  			 * 			Row: ...
+	  			 * 	}
+	  			 * 
+	  			 */
+	  		
+	  		var i;
+	  		for (i=1; i<=info.Projects.length; i++){
+	  		//while(i<info.Projects.length){
+	  			i = i-1;
+		  	 	//Init row
+				newRow = document.createElement('div');
+		  		newRow.id = "row";
+		  	 	
+		  	 	//Add items in sets of 3
+	  			for (var j=0; j<3; j++){
+	  				// Add an item
+	  				if (i < info.Projects.length){
+			  			// Extract project data
+				  		name = info.Projects[i].name;
+				  	 	year = info.Projects[i].year;
+				  	 	period = info.Projects[i].period;
+				  	 	tags = info.Projects[i].tags;
+				  	 	description = info.Projects[i].description;
+				  	 	url = info.Projects[i].url;
+				  	 	img = info.Projects[i].img;
+				  	 
+				  	 	// init Item
+				  	 	var newItem = document.createElement('div');
+			  			newItem.id = "rowItems";
+				  	 
+						// Add img
+						var newImg = document.createElement("div");
+						newImg.id = "img";
+				  		if (img.length>0){
+					  		var elem = document.createElement("img");
+							elem.setAttribute("src", img);
+							//elem.setAttribute("height", "100px");
+							 elem.setAttribute("width", "100%");
+							elem.setAttribute("alt", name);
+							elem.id = "proj";
+							newImg.appendChild(elem);
+						}
+				  	 	
+				  	 	//// Add title
+				  	 	// Change name color for robotics/vision/other
+				  	 	for (j_var in tags){
+					  	 	if (tags[j_var] == "Robotics"){header = "h4"; break;}
+					  	 	else if (tags[j_var] == "Vision"){header = "h5"; break;}
+					  	 	else {header = "h6";}
+					  	 }
+				  	 	var newTitleDiv = document.createElement('div');
+				  	 	newTitleDiv.id = "title";
+				  	 	newTitle = document.createElement(header);
+				  	 	var txt = name;
+				  		newText = document.createTextNode(txt);
+				  		newTitle.appendChild(newText);
+				  		newTitleDiv.appendChild(newTitle);
+
+				  		
+				  		
+				  		//// Add description
+				  		// newText = document.createTextNode(description);
+				  		// newPara.appendChild(newText);
+				  		// newPara2 = document.createElement('p');
+				  		// var tag_txt = "";
+				  		// for (j_var in tags){
+				  			// tag_txt += tags[j_var];
+				  			// if (tags[j_var] != tags[tags.length-1]) {tag_txt += ", ";}
+				  		// }
+				  		// newText = document.createTextNode("Tags: " + tag_txt);
+				  		// newPara2.appendChild(newText);
+				  		// newPara.appendChild(newPara2);
+			
+						//alert(name + " (" + period + " " + year + ")");
+						
+						// // Add Documentation URL		
+				  		// if (url.length > 0){
+					  		// var newPara3 = document.createElement('p');
+					  		// var newLink = document.createElement('a');
+					  		// newLink.href = url;
+					  		// newLink.appendChild(document.createTextNode("Documentation"));
+					  		// newPara3.appendChild(newLink);
+					  		// newPara.appendChild(newPara3);
+						// }	  		
+				  		// newRow.appendChild(newPara);
+				  		
+				  		  		
+						//// Add date
+						var newDate = document.createElement("div");
+						newDate.id = "date";
+				  	 	txt = " (" + period + " " + year + ")";
+				  		newText = document.createTextNode(txt);
+				  		newDate.appendChild(newText);
+				  		
+						// Put everything in the item
+						newItem.appendChild(newImg);
+						newItem.appendChild(newTitleDiv);
+						newItem.appendChild(newDate);
+						
+										
+			  		} // end if statement
+			  		//alert("h2");
+			  		
+				  	newRow.appendChild(newItem);
+					i++;
+				} // end row
+				
+				newContainer.appendChild(newRow);
+				//div.appendChild(newRow);
+				
+				
+			  	//div.appendChild(document.createElement("br"));			  	
+		  	} //end items
+	  		
+	  		div.appendChild(newContainer);
+	  		div.appendChild(document.createElement("br"));
+	  	//}
+   }
+   
+   
+  </script>
+
+<!--<?php include("/ColinLea/home.html") ?>-->
+<!-- - - - - - - - - - - - - - - - - HEADER  - - - - - - - - - - - - - - - - -->
+<header>
+<br>
+<h1>Colin Lea</h1>
+<!--<h2> <i> robotics . haptics . vision</i> </h2>-->
+<h2> <i> robotics . haptics . computer vision . machine learning</i> </h2>
+
+<ul class="centered">
+<li class="header"><a id="nav" href="/ColinLea/home.html">home</a></li>
+<li class="header"><a id="nav" href="/ColinLea/projects.html">projects</a></li>
+<li class="header"><a id="nav" href="/ColinLea/tutorials.html">tutorials</a></li>
+<li class="header"><a id="nav" href="http://colinlea.posterous.com">blog</a></li>
+</ul>
+
+</nav>
+</header>
+<!-- - - - - - - - - - - - - - - - - /HEADER  - - - - - - - - - - - - - - - - -->
+	
+<br>
+<div id="proj">
+
+<h3>Undergraduate Projects:</h3>
+<!--
+<ul class="themes">
+	
+	<li class="robotics medium">Robotics<p> - </p></li>
+	<li class="vision medium">Computer Vision - Cameras are pervasive in our society.</li>
+	<li class="other medium">Haptics - By using the sense of touch it is possible to enhance . There are two principal areas where haptics can help in medical fields: </li>
+	<li>Machine Learning - Each of these involve mathematical modeling for </li>
+	<br>
+	
+</ul>
+-->
+</div>
+<br>
+	
+	<div id="proj">
+		<!--
+		<h3>Projects:</h3>
+		<hr>
+		<br><br>
+		-->
+<br><br>
+	
+		
+	</div>
+	
+	<br><br><br><br><br><br>
+</body>
+</html>

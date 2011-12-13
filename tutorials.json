@@ -1,0 +1,47 @@
+{
+    "test": "test",
+    "Projects": [
+        {
+            "major": 1,
+            "name": "Creating Haptic Simulations using H3D",
+            "img": "/projects/imgs/ARM_tutorials.jpeg",
+            "show": 1,
+            "url": ["Webpage","http://sites.google.com/site/h3dtutorials/"],
+            "tags": [
+                "Haptics",
+                "Automation, Robotics & Mechatronics Lab"
+            ],
+            "period": "Spring",
+            "year": 2010,
+            "date": 2010.2,
+            "description": "The goal of these tutorials is to get a user started with H3D, an open source haptics platform. An introduction to implementing virtual fixtures with X3D and more in depth applications using Python are provided. The creation of new force effects using C++ for enhanced manipulation is also presented. The target demographic is anyone interested in haptics with some programming experience."
+        },
+        {
+            "name": "Compact Rio/Simulink Video Tutorials",
+            "img": "/projects/imgs/ARM_crio.jpeg",
+            "show": 1,
+            "url": ["Webpage","https://sites.google.com/site/colincsl/armlab/ARM09_Misc#TOC-National-Instruments-Compact-Rio"],
+            "tags": [
+                "Automation, Robotics & Mechatronics Lab"
+            ],
+            "period": "Summer",
+            "year": 2009,
+            "date": 2009.3,
+            "description": "Getting the National Instruments Compact Rio to work with Simulink can be a bit tricky. Video tutorials demonstrate how to work between Simulink and LabVIEW and how to interface the cRio with LabVIEW."
+        },
+        {
+        	"major": 1,
+            "name": "SimMechanics",
+            "img": "",
+            "show": 1,
+            "url": ["Document","https://docs.google.com/Doc?docid=0AWEDVAtaGbOtZGY2bjZwMmtfMjY2Zzg3Y3hnZ3I&hgd=1"],
+            "tags": [
+                "Automation, Robotics & Mechatronics Lab"
+            ],
+            "period": "Spring",
+            "year": 2009,
+            "date": 2009.2,
+            "description": "SimMechanics allows for creation of rigid bodies for dynamic simulation. It is possible to create a collection of rigid bodies and joints with actuators and sensors without having to develop the kinematic equations. In this tutorial I demonstrate how to develop a fourbar mechanism."
+        }
+    ]
+}
