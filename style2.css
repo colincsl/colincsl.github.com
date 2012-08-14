@@ -22,8 +22,9 @@ font-size:1.5em;
 text-align:center;
 }
 h3 {
+font-family:"Century Gothic";
 color:rgb(100,100,100);
-font-size:1.25em;
+font-size:1.2em;
 text-align:justify;
 }
 h4 { /*<!-- Robotics -->*/
@@ -42,13 +43,11 @@ font-size:1.5em;
 text-align:justify;
 }
 
-
 /* Classes (Robo/vis/haptics) */
 ul.robotics {color:rgb(200,50,10);}
 ul.vision {color:rgb(50,170,10);}
 ul.other {color:rgb(30,50,170);}
-.medium{
-	font-size:1.4em}
+.medium{font-size:1.4em}
 }
 
 .C2 { 
