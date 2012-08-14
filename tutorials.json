@@ -4,7 +4,7 @@
         {
             "major": 1,
             "name": "Creating Haptic Simulations using H3D",
-            "img": "/projects/imgs/ARM_tutorials.jpeg",
+            "img": "projects/imgs/ARM_tutorials.jpeg",
             "show": 1,
             "url": ["Webpage","http://sites.google.com/site/h3dtutorials/"],
             "tags": [
@@ -18,7 +18,7 @@
         },
         {
             "name": "Compact Rio/Simulink Video Tutorials",
-            "img": "/projects/imgs/ARM_crio.jpeg",
+            "img": "projects/imgs/ARM_crio.jpeg",
             "show": 1,
             "url": ["Webpage","https://sites.google.com/site/colincsl/armlab/ARM09_Misc#TOC-National-Instruments-Compact-Rio"],
             "tags": [

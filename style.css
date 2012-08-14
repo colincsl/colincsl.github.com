@@ -1,18 +1,21 @@
 body { 
-background-color:rgb(250,250,245);
+/*background-color:rgb(250,250,245);*/
+background-color:rgb(252,250,241);
  }
 
 
 h1 {
-font-family:"Paletino Linotype";
-color:rgb(230,150,10);
+font-family:"TW Cen MT";
+/*color:rgb(230,150,10);*/
+color:rgb(215, 134, 69);
 text-align:left;
 font-size:4em;
 margin-left:55%;
 }
 h2 {
-font-family:"Helvetica";
-color:rgb(70,70,215);
+font-family:"Century Gothic";
+/*font-family:"Helvetica";*/
+color:rgb(80,80,135);
 font-size:1.5em;
 text-align:center;
 }
@@ -46,7 +49,8 @@ ul.other {color:rgb(30,50,170);}
 }
 
 .C2 { 
-font-family:"Helvetica";
+font-family:"Century Gothic";
+/*font-family:"Helvetica";*/
     color:blue;
     text-align:center;
     margin-left:32%;
@@ -59,7 +63,8 @@ text-shadow: 0.1em 0.1em #888
 .justified{ text-align:justify;}
 
 #P1 {
-    font-family:"Helvetica";
+    font-family:"Century Gothic";
+    /*font-family:"Helvetica";*/
     font-size:1em;
     margin-left:10em;
 }
@@ -84,7 +89,8 @@ a:link#nav,a:visited#nav{
 background-color:#E0E0E0;
 color:rgb(230,130,10);
 font-weight:bold;
-font-family:"Helvetica";
+font-family:"Century Gothic";
+/*font-family:"Helvetica";*/
 text-align:center;
 padding:2.5%;
 padding-top:.2em;
@@ -99,6 +105,7 @@ background-color:#FFFFFF;
 
 
 div#bio {
+  font-family:"Century Gothic";
   width: 60%;
   column-width:30%;
   column-gap:2em;
@@ -107,6 +114,7 @@ div#bio {
 }
 
 div#proj {
+  font-family:"Century Gothic";
   margin-left:15%;
   margin-right:20%;
   width: 70%;
@@ -119,6 +127,7 @@ div#proj {
 
 
 div#container {
+  font-family:"Century Gothic";
     display: table;
     text-align:center;
     border: 0px solid #333;
