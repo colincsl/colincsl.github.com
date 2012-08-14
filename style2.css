@@ -1,13 +1,17 @@
 body { 
-background-color:rgb(250,250,245);
- }
+/*background-color:rgb(250,250,245);*/
+background-color:rgb(252,250,241);
+}
 
 h1 {
 font-family:"TW Cen MT";
 /*color:rgb(230,150,10);*/
 color:rgb(215, 134, 69);
-text-align:left;
-font-size:4em;
+/*text-align:center;*/
+/*vertical-align:text-bottom;*/
+/*text-align:left;*/
+
+font-size:4.5em;
 margin-left:55%;
 }
 h2 {
@@ -19,23 +23,23 @@ text-align:center;
 }
 h3 {
 color:rgb(100,100,100);
-font-size:1.5em;
+font-size:1.25em;
 text-align:justify;
 }
 h4 { /*<!-- Robotics -->*/
 color:rgb(200,50,10);
-font-size:1.25em;
-text-align:center;
+font-size:1.5em;
+text-align:justify;
 }
 h5 { /*<!-- vision -->*/
 color:rgb(50,170,10);
-font-size:1.25em;
-text-align:center;
+font-size:1.5em;
+text-align:justify;
 }
-h6 { /*<!-- haptics -->*/
+h6 { /*<!-- other -->*/
 color:rgb(30,50,170);
-font-size:1.25em;
-text-align:center;
+font-size:1.5em;
+text-align:justify;
 }
 
 
@@ -88,7 +92,8 @@ a:link#nav,a:visited#nav{
 background-color:#E0E0E0;
 color:rgb(230,130,10);
 font-weight:bold;
-font-family:"Helvetica";
+/*font-family:"Helvetica";*/
+font-family:"Century Gothic";
 text-align:center;
 padding:2.5%;
 padding-top:.2em;
@@ -218,6 +223,7 @@ div#rowItems:hover > #img{
 }
 
 div#title{
+	font-family:"Century Gothic";
 	height: 40%;
 }
 div#rowItems:hover > #title{
@@ -229,6 +235,7 @@ div#date{
 
 }
 div#description{
+	font-family:"Century Gothic";
 	font-size:1em;
 	border: 1px solid #FF853C;
 	border-radius: 25px;
@@ -236,6 +243,7 @@ div#description{
 	text-align: left;
 }
 div#rowItems:hover > #description{
+	font-family:"Century Gothic";
 	font-size:1.5em;
 }
 
