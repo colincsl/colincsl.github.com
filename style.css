@@ -21,6 +21,7 @@ text-align:justify;
 }
 h4 { /*<!-- Robotics -->*/
 /*color:rgb(200,50,10);*/
+color:rgb(100,100,100);
 font-size:1.2em;
 text-align:justify;
 }
@@ -32,6 +33,7 @@ text-align:justify;
 }
 h6 { /*<!-- other -->*/
 /*color:rgb(30,50,170);*/
+color:rgb(100,100,100);
 font-size:1.2em;
 text-align:justify;
 }
