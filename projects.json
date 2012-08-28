@@ -62,7 +62,7 @@
             "period": "Fall",
             "year": 2010,
             "date": 2010.4000000000001,
-            "description": "Abstract— Object detection and classiﬁcation using video is necessary for intelligent planning and navigation on a mobile robot. However, current methods can be too slow or not sufﬁcient for distinguishing multiple classes. Techniques that rely on binary (foreground/background) labels incorrectly identify areas with multiple overlapping objects as single segment. We propose two Hierarchical Markov Random Field models in efforts to distinguish connected objects using tiered, binary label sets. Near-realtime performance has been achieved using efﬁcient optimization methods which runs up to 11 frames per second on a dual core 2.2 Ghz processor. Evaluation of both models is done using footage taken from a robot obstacle course at the 2010 Intelligent Ground Vehicle Competition."
+            "description": "Abstract: Object detection and classiﬁcation using video is necessary for intelligent planning and navigation on a mobile robot. However, current methods can be too slow or not sufﬁcient for distinguishing multiple classes. Techniques that rely on binary (foreground/background) labels incorrectly identify areas with multiple overlapping objects as single segment. We propose two Hierarchical Markov Random Field models in efforts to distinguish connected objects using tiered, binary label sets. Near-realtime performance has been achieved using efﬁcient optimization methods which runs up to 11 frames per second on a dual core 2.2 Ghz processor. Evaluation of both models is done using footage taken from a robot obstacle course at the 2010 Intelligent Ground Vehicle Competition."
         },
         {
             "major": 0,
