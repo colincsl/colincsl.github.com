@@ -21,19 +21,22 @@ text-align:justify;
 }
 h4 { /*<!-- Robotics -->*/
 /*color:rgb(200,50,10);*/
-color:rgb(100,100,100);
+/*color:rgb(100,100,100);*/
+color:rgb(215, 134, 69);
 font-size:1.2em;
 text-align:justify;
 }
 h5 { /*<!-- vision -->*/
 /*color:rgb(50,170,10);*/
-color:rgb(100,100,100);
+/*color:rgb(100,100,100);*/
+color:rgb(215, 134, 69);
 font-size:1.2em;
 text-align:justify;
 }
 h6 { /*<!-- other -->*/
 /*color:rgb(30,50,170);*/
-color:rgb(100,100,100);
+/*color:rgb(100,100,100);*/
+color:rgb(215, 134, 69);
 font-size:1.2em;
 text-align:justify;
 }
@@ -124,8 +127,8 @@ div#bio {
 
 div#proj, div#sVision, div#sHaptics, div#sRobotics, div#sClasses, div#sOther {
   font-family:"Century Gothic";
-  margin-left:22.5%;
-  margin-right:22.5%;
+  margin-left:15%;
+  margin-right:15%;
   /*align:center;*/
 
   /*font-size:1.1em;*/

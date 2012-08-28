@@ -1,0 +1,359 @@
+<html>
+<head>
+	<title>Colin Lea</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-15462704-4']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+
+	<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+	<!--<script src="/ColinLea/prototype.js"></script>-->
+	
+	
+	<script id="main" type="text/javascript">
+	var info = {}
+  	$.getJSON('projects.json', function(data){
+  		info = data;
+  	});
+  	// alert('1');
+  	setTimeout("projects()", 2000);
+  	// alert('2');
+  	/* Format:
+	  			 * 
+	  			 * --------------------
+	  			 * img		| img	| img
+	  			 * title	| title	| title
+	  			 * date		| date 	| date
+	  			 * --------------------
+	  			 * 
+	  			 *  Container{
+	  			 * 			Row:
+	  			 * 				item
+	  			 * 				item
+	  			 * 				item
+	  			 * 			Row: ...
+	  			 * 			Row: ...
+	  			 * 	}
+	  			 * 
+	  			 */
+  	
+ 	var name, year, period, description, tag, place, url, img, header, major;
+ 	var newTitle, newPara, newPara2, newText, div, newDiv, newRow, newContainer, newImg;	
+ 	
+ 	var tagSet = ["Robotics", "Vision", "Haptics", "Other", "Class","UB Robotics Club", "Visual and Perceptual Machines Lab", "Field Robotics Center", "Automation & Robotics Lab"];
+ 	var sectionSet = {"Vision":0, "Haptics":1, "Robotics":2, "Class":3, "Other":4};
+ 	var divSectionConvert = {"Vision":"sVision", "Haptics":"sHaptics", "Robotics":"sRobotics", "Class":"sClass", "Other":"sOther"}; 
+ 	var years = [2007, 2008, 2009, 2010, 2011, 2012];
+ 	var rowSize = 4;
+ 	var currentRowSize = [0, 0, 0, 0, 0];
+ 	var descriptionActive = -1; // Should be -1 for none or 0-N for project number
+ 	
+ 	function mouseOver(item_ind){
+ 		// alert(descriptionActive);
+ 		
+ 	 	if ((descriptionActive >= 0)){
+ 	 		if (descriptionActive != item_ind){
+	 	 		var desc = document.getElementById("description");
+ 				desc.parentNode.removeChild(desc);
+ 				descriptionActive = -1;
+ 			}
+ 		} else {
+ 			// alert("b");	
+ 			var newDesc = document.createElement('div');
+ 			newDesc.id = "description";
+ 			
+ 			var txt = document.createTextNode(info.Projects[item_ind].description); 			
+ 			newDesc.appendChild(txt)
+			// alert(divSectionConvert[info.Projects[item_ind].tags[0]]);
+ 			preDiv = document.getElementById(divSectionConvert[info.Projects[item_ind].tags[0]]);
+ 			preDiv.appendChild(newDesc);
+
+ 			descriptionActive = item_ind;
+ 		};
+ 	}
+ 	// function mouseOut(){
+ 		// if (descriptionActive){
+// 	 		
+ 		// }
+ 	// }
+  	
+  	function projects(){
+  		//alert("s");
+  		div = document.getElementById('proj');
+  		divs = Array(4);
+  		divs[0] = document.getElementById('sVision');
+  		divs[1] = document.getElementById('sHaptics');
+  		divs[2] = document.getElementById('sRobotics');
+  		divs[3] = document.getElementById('sClasses');
+  		divs[4] = document.getElementById('sClasses');
+  		if (!div){alert("Error");};
+
+  			// div.appendChild(document.createElement("hr"));
+
+		  	
+		  	var Containers = Array(5);
+		  	var Rows = Array(5);
+		  	
+		  	for (var i=0; i<5; i++){
+		  		Containers[i] = document.createElement('div'); 
+		  		Containers[i].id = "container";
+		  		Rows[i] = document.createElement('div');
+		  		Rows[i].id = "row";
+			}
+		  	
+	  		var i;
+	  		for (i=0; i<info.Projects.length; i++){
+		  	 	
+	  			// Extract project data
+		  		name = info.Projects[i].name;
+		  	 	year = info.Projects[i].year;
+		  	 	period = info.Projects[i].period;
+		  	 	tags = info.Projects[i].tags;
+		  	 	description = info.Projects[i].description;
+		  	 	url = info.Projects[i].url;
+		  	 	img = info.Projects[i].img;
+		  	 	show = info.Projects[i].show;
+		  	 	// alert(show);
+		  	 
+		  	 	// init Item
+		  	 	var newItem = document.createElement('div');
+		  	 	newItem.setAttribute("onMouseOver", 'mouseOver('+i+')');
+		  	 	// newItem.setAttribute("onMouseOut", 'mouseOut('+i+')');
+	  			newItem.id = "rowItems";
+		  	 
+				// Add img
+				var newImg = document.createElement("div");
+				newImg.id = "img";
+				newImg.onMouseOver = "mouseOver()";
+		  		if (img.length>0){
+			  		var elem = document.createElement("img");
+					elem.setAttribute("src", img);
+					//elem.setAttribute("height", "100px");
+					elem.setAttribute("width", "100%");
+					elem.setAttribute("alt", name);
+					elem.id = "proj";
+					newImg.appendChild(elem);
+				}
+		  	 	
+		  	 	//// Add title
+		  	 	// Change name color for robotics/vision/other
+		  	 	 for (j_var in tags){
+		  	 		j_var = 0;
+			  	 	if (tags[j_var] == "Robotics"){header = "h4"; break;}
+			  	 	else if (tags[j_var] == "Vision"){header = "h5"; break;}
+			  	 	else {header = "h6";}
+			  	 }
+			  	// if (tags[0] == "Robotics"){header = "h4"; break;}
+			  	// else if (tags[0] == "Vision"){header = "h5"; break;}
+			  	// else {header = "h6";}
+		  	 	var newTitleDiv = document.createElement('div');
+		  	 	newTitleDiv.id = "title";
+		  	 	newTitle = document.createElement(header);
+		  	 	var txt = name;
+		  		newText = document.createTextNode(txt);
+		  		newTitle.appendChild(newText);
+		  		newTitleDiv.appendChild(newTitle);
+
+		  		//// Add description
+		  		var newTextDiv = document.createElement('div');
+		  		newTextDiv.id = "description";
+		  		
+		  		newText = document.createTextNode(description);
+		  		newTextDiv.appendChild(newText);
+		  		//newPara2 = document.createElement('p');
+		  		// var tag_txt = "";
+		  		// for (j_var in tags){
+		  			// tag_txt += tags[j_var];
+		  			// if (tags[j_var] != tags[tags.length-1]) {tag_txt += ", ";}
+		  		// }
+		  		// newText = document.createTextNode("Tags: " + tag_txt);
+		  		// newPara2.appendChild(newText);
+		  		// newPara.appendChild(newPara2);
+				
+				// // Add Documentation URL		
+		  		// if (url.length > 0){
+			  		// var newPara3 = document.createElement('p');
+			  		// var newLink = document.createElement('a');
+			  		// newLink.href = url;
+			  		// newLink.appendChild(document.createTextNode("Documentation"));
+			  		// newPara3.appendChild(newLink);
+			  		// newPara.appendChild(newPara3);
+				// }	  		
+		  		// newRow.appendChild(newPara);
+		  		
+		  		  		
+				//// Add date
+				var newDate = document.createElement("div");
+				newDate.id = "date";
+		  	 	txt = " (" + period + " " + year + ")";
+		  		newText = document.createTextNode(txt);
+		  		newDate.appendChild(newText);
+		  		
+				// Put everything in the item
+				newItem.appendChild(newImg);
+				newItem.appendChild(newTitleDiv);
+				// newItem.appendChild(newTextDiv);
+				newItem.appendChild(newDate);
+									
+		  		try{
+		  			var index = sectionSet[tags[0]];
+		  			//alert(tags[0]+" "+index);
+		  		} catch(e) {
+		  			var index = 4;
+		  		}
+		  		
+			  	//Rows[index].appendChild(newItem);
+			  	// alert("ee");
+			  	if (show==1 || show==undefined){
+				  	if (currentRowSize[index] >= rowSize){
+				  		Containers[index].appendChild(Rows[index]);
+				  		divs[index].appendChild(Containers[index]);
+				  		
+				  		//Containers[i] = document.createElement('div'); 
+			  			//Containers[i].id = "container";
+				  		Rows[index] = document.createElement('div');
+			  			Rows[index].id = "row";
+				  		currentRowSize[index] = 0;
+				  	} else {
+				  		currentRowSize[index]++;
+				  	}
+				  	Rows[index].appendChild(newItem);
+				}
+			  	
+			  	
+		  	} //end items
+	  		
+	  		for (var jj=0; jj<4; jj++){
+	  			// alert(currentRowSize);
+		  		if (currentRowSize[jj] >= 0){
+		  			for (var ii=currentRowSize[jj]; ii< rowSize-1; ii++){
+		  				var tmpItem = document.createElement('div');
+		  				tmpItem.id = 'rowItems';
+		  				Rows[jj].appendChild(tmpItem);
+		  			}
+				  		Containers[jj].appendChild(Rows[jj]);
+				}
+				
+				divs[jj].appendChild(Rows[jj]);
+				divs[jj].appendChild(document.createElement("br"));
+	  		}
+	  		
+   }
+   
+   
+  </script>
+
+<!-- - - - - - - - - - - - - - - - - HEADER  - - - - - - - - - - - - - - - - -->
+<html>
+    <head>
+        <title>Colin Lea</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+    
+    <!-- - - - - - - - - - - - - - - - - HEADER  - - - - - - - - - - - - - - - - -->
+    <header>
+        <br><br><br>
+        <!-- <h1><img src="ColinLea_orange.png" alt="Colin Lea" height=120px align="bottom"/> Colin Lea</h1> -->
+        <!-- <h2> <i> robotics . computer vision . machine learning</i> </h2> -->
+
+        <table align="center" cellpadding=20%><tr>
+        <td align="left" white-space="nowrap" overflow="hidden">
+            <div id="Title" align="left">
+                <b>Colin Lea</b>
+            </div>
+        </td>
+        <td align="right" white-space="nowrap" overflow="hidden">
+            <img src="ColinLea_orange.png" alt="Colin Lea" height=140px/>
+        </td>
+        </tr></table>
+        <br>
+        
+        <ul class="centered">
+            <li class="header"><a id="nav" href="index.html">home</a></li>
+            <li class="header"><a id="nav" href="projects.html">projects</a></li>
+            <li class="header"><a id="nav" href="documents.html">documents</a></li>
+            <li class="header"><a id="nav" href="https://github.com/colincsl">code</a></li>
+            <li class="header"><a id="nav" href="http://colinlea.wordpress.com">blog</a></li>
+        </ul>
+        
+        </nav>
+    </header>
+<!-- - - - - - - - - - - - - - - - - /HEADER  - - - - - - - - - - - - - - - - -->
+<body>
+<div id="proj">
+
+<h3></h3>
+<!--
+<ul class="themes">
+	
+	<li class="robotics medium">Robotics<p> - </p></li>
+	<li class="vision medium">Computer Vision - Cameras are pervasive in our society.</li>
+	<li class="other medium">Haptics - By using the sense of touch it is possible to enhance . There are two principal areas where haptics can help in medical fields: </li>
+	<li>Machine Learning - Each of these involve mathematical modeling for </li>
+	<br>
+	
+</ul>
+-->
+
+<!--
+<h3>Publications:</h3>
+<h5 class="justified"><b>Lea, C.S.</b> and Corso, J.J. <i>Efficient Hierarchical Markov Random Fields for Object Detection on a Mobile Robot.</i> Arxiv preprint arXiv:1111.1599. 2011.</h5>
+
+</br></br>
+
+
+<h5 class="justified">Wong, U. and Morris, A. and <b>Lea, C.</b> and Lee, J. and Whittaker, C. and Garney, B. and Whittaker, R., <i>Comparative evaluation of range sensing technologies for underground void modeling</i> International Conference on Intelligent Robots and Systems (IROS). 2011.</h5>
+</br>
+-->
+ 
+<h3><div align="center"><u>Undergraduate projects</u></div></h3>
+
+<div id="sVision">
+<h3>Vision:</h3>
+</div>
+<h5 class="justified">Computer vision applications are becoming much more pervasive in society. Cameras are everywhere, so it is advantageous to create new methods for interacting and learning from these devices. I'm interested in developing tools for real-time vision capable of detecting physical structure and for object recognition.</h5>
+
+<div id="sHaptics">
+<h3>Haptics:</h3>
+</div>
+<h6 class="justified">Adding the sense of touch to simulations and remote devices can provide a much more immersive interface for human-machine interaction. I'm interested in investigating haptic guidance particularly for medical applications.</h6>
+
+<div id="sRobotics">
+<h3>Robotics:</h3>
+</div>
+<h4 class="justified"> I am interested in developing methods for perception that enable robots to work with humans to perform tasks such as assisted surgery. I think that robots should help - not necessarily replace - humans for dangerous and precise activities.</h4>
+<div id="sClasses">
+<h3>Classes:</h3>
+</div>
+<div id="sOther">
+<!--<h3>Other:</h3>-->
+</div>
+
+<!-- <iframe src="https://docs.google.com/present/embed?id=df6n6p2k_462cxxv9pc5&size=l" frameborder="0" width="700" height="559"></iframe> -->
+
+</div>
+<br>
+	
+	<div id="proj">
+		<!--
+		<h3>Projects:</h3>
+		<hr>
+		<br><br>
+		-->
+<br><br>
+	
+		
+	</div>
+	
+	<br><br><br><br><br><br>
+</body>
+</html>
