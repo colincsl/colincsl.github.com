@@ -1,0 +1,908 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CVPR 2013 Accepted Papers</title>
+
+
+<style>
+/* CSS */
+
+/*background-color: #C05F24;*/
+/*background-color: #e78444;*/
+
+
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: arial;
+	background-color: #FCFAF1;
+	/*background-color: #F6F3E5;*/
+}
+.as {
+	font-size: 12px;
+	color: #900;
+}
+.ts {
+	font-weight: bold;
+	font-size: 14px;
+}
+.tt {
+	color: #009;
+	font-size: 13px;
+}
+.keywords {
+	font-size: 12px;
+	color: #0000A0;
+}
+h1 {
+	font-size: 20px;
+	padding: 0;
+	margin: 0;
+}
+img {
+	max-width: 100%;
+}
+#titdiv {
+	width: 100%;
+	height: 130px;
+	background-color: #C05F24;
+	/*background-color: #840000;*/
+	color: white;
+
+	padding-top: 20px;
+	padding-left: 5%;
+
+	border-bottom: 1px solid #540000;
+}
+
+#maindiv {
+	width: 970px;
+	padding: 15px;
+	margin-left: auto;
+	margin-right: auto;
+
+	border-left: solid 1px #D6D3C5;
+	border-right: solid 1px #D6D3C5;
+
+	background-color: white;
+}
+
+.apaper {
+	margin-top: 25px;
+	min-height: 300px;
+}
+
+.paperdesc {
+	float: left;
+}
+
+.dllinks {
+	float: right;
+	text-align: right;
+}
+
+#titdiv a:link{ color: white; }
+#titdiv a:visited{ color: white; }
+
+#maindiv a:link{ color: #666; }
+#maindiv a:visited{ color: #600; }
+
+.t0 { color: #000;}
+.t1 { color: #C00;}
+.t2 { color: #0C0;}
+.t3 { color: #00C;}
+.t4 { color: #AA0;}
+.t5 { color: #C0C;}
+.t6 { color: #0CC;}
+
+.topicchoice {
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 4px;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#explanation {
+	/*background-color: #CFC;*/
+	background-color: #f7a76f;
+	border-radius: 5px;
+	color: black;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#sortoptions {
+	text-align: center;
+	padding: 10px;
+}
+
+.sim {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.abstr {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.abstrholder {
+	background-color: #DFD;
+	border: 1px solid #BDB;
+	font-size: 12px;
+	padding: 10px;
+	border-radius: 5px;
+	display: none; /* so that these are hidden initially */
+	margin-bottom: 5px;
+}
+
+</style>
+
+<script src="jquery-1.8.3.min.js"></script>
+<script>
+
+// this line below will get filled in with database of LDA topic distributions for top words
+// for every paper
+ldadist=[[0.18,0.09,0.15,0.10,0.20,0.13,0.15],[0.18,0.09,0.15,0.10,0.13,0.11,0.24],[0.24,0.10,0.14,0.12,0.13,0.13,0.13],[0.18,0.09,0.14,0.10,0.17,0.19,0.13],[0.17,0.25,0.13,0.10,0.11,0.10,0.13],[0.20,0.12,0.17,0.11,0.15,0.12,0.12],[0.12,0.10,0.15,0.11,0.12,0.22,0.17],[0.17,0.10,0.15,0.12,0.12,0.13,0.21],[0.20,0.15,0.14,0.11,0.12,0.12,0.19],[0.21,0.09,0.15,0.11,0.14,0.16,0.14],[0.19,0.22,0.11,0.14,0.14,0.10,0.11],[0.25,0.12,0.12,0.11,0.12,0.11,0.15],[0.14,0.14,0.15,0.20,0.11,0.13,0.14],[0.24,0.11,0.14,0.10,0.14,0.13,0.14],[0.18,0.11,0.15,0.10,0.22,0.12,0.13],[0.18,0.12,0.14,0.09,0.21,0.12,0.14],[0.18,0.10,0.15,0.10,0.20,0.13,0.15],[0.17,0.10,0.22,0.11,0.14,0.11,0.15],[0.25,0.12,0.14,0.11,0.14,0.10,0.14],[0.16,0.12,0.13,0.10,0.15,0.12,0.21],[0.15,0.11,0.21,0.12,0.15,0.14,0.13],[0.17,0.12,0.14,0.18,0.15,0.14,0.11],[0.14,0.10,0.23,0.12,0.14,0.13,0.14],[0.18,0.21,0.14,0.10,0.14,0.11,0.12],[0.14,0.13,0.15,0.13,0.20,0.14,0.11],[0.18,0.11,0.14,0.16,0.12,0.14,0.15],[0.22,0.08,0.16,0.12,0.15,0.13,0.14],[0.20,0.11,0.15,0.10,0.19,0.13,0.13],[0.18,0.11,0.14,0.12,0.13,0.12,0.20],[0.17,0.09,0.16,0.11,0.13,0.18,0.15],[0.18,0.12,0.13,0.18,0.12,0.12,0.15],[0.22,0.11,0.14,0.11,0.15,0.12,0.14]]
+
+// this will be filled with pairwise scores between papers
+pairdists=[[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00],[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00]]
+
+var choices = [0, 0, 0, 1, 1, 0, 0]; // default choices, random...
+var similarityMode = 0; // is the user currently looking at papers similar to some one paper?
+var similarTo = 0; // the index of query paper
+
+// given choices of topics to sort by, handle user interface stuff (i.e. show selection)
+function colorChoices() {
+	for(var i=0;i<choices.length;i++) {
+		if(choices[i] == 1) {
+			$("#tc"+i).css("background-color", "#EFE");
+			$("#tc"+i).css("border-color", "#575");
+		} else {
+			$("#tc"+i).css("background-color", "#FFF");
+			$("#tc"+i).css("border-color", "#FFF");
+		}
+	}
+}
+
+// this permutes the divs (that contian 1 paper each) based on a custom sorting function
+// in our case, this sort is done as dot product based on the choices[] array
+// here we are guaranteed ldadist[] already sums to 1 for every paper
+function arrangeDivs() {
+	var rtable = $("#rtable");
+	var paperdivs = rtable.children(".apaper");
+
+	// normalize choices to sum to 1
+	var nn = choices.slice(0); // copy the array
+	var ss = 0.0;
+	for(var j=0;j<choices.length;j++) { ss += choices[j]; }
+	for(var j=0;j<choices.length;j++) { nn[j] = nn[j]/ss; }
+
+	paperdivs.detach().sort(function(a,b) {
+		var ixa = parseInt($(a).attr('id').substring(3));
+		var ixb = parseInt($(b).attr('id').substring(3));
+
+		if(similarityMode === 1) {
+			return pairdists[ixa][similarTo] < pairdists[ixb][similarTo] ? 1 : -1;
+		}
+
+		if(similarityMode === 0) {
+
+			// chi-squared kernel for the two histograms
+			var accuma = 0;
+			var accumb = 0;
+			for(var i=0;i<7;i++) {
+				var ai= ldadist[ixa][i];
+				var bi= ldadist[ixb][i];
+				var ci= choices[i];
+				accuma += (ai-ci)*(ai-ci)/(ai+ci);
+				accumb += (bi-ci)*(bi-ci)/(bi+ci);
+			}
+			return accuma > accumb ? 1 : -1;
+
+			/*
+			// vector distance. These are histograms... but lets pretend they arent
+			var accuma = 0;
+			var accumb = 0;
+			for(var i=0;i<7;i++) {
+				var ai= ldadist[ixa][i];
+				var bi= ldadist[ixb][i];
+				var ci= nn[i];
+				accuma += (ai-ci)*(ai-ci);
+				accumb += (bi-ci)*(bi-ci);
+			}
+			return accuma > accumb ? 1 : -1;
+			*/
+
+			/*
+			// inner product distance
+			var accuma = 0;
+			var accumb = 0;
+			for(var i=0;i<7;i++) {
+				accuma += ldadist[ixa][i] * choices[i];
+				accumb += ldadist[ixb][i] * choices[i];
+			}
+			return accuma < accumb ? 1 : -1;
+			*/
+		}
+
+	});
+	rtable.append(paperdivs);
+}
+
+// when page loads...
+$(document).ready(function(){
+
+	arrangeDivs();
+	colorChoices();
+
+	// user clicks on one of the Topic buttons
+	$(".topicchoice").click(function() {
+		similarityMode = 0; // make sure this is off
+		var tcid = parseInt($(this).attr('id').substring(2));
+		choices[tcid] = 1 - choices[tcid]; // toggle!
+
+		colorChoices();
+		arrangeDivs();
+	});
+
+	// user clicks on "rank by tf-idf similarity to this" button for some paper
+	$(".sim").click(function() {
+		similarityMode = 1; // turn on similarity mode
+		for(var i=0;i<choices.length;i++) { choices[i] = 0; } // zero out choices
+		similarTo = parseInt($(this).attr('id').substring(3)); // store id of the paper clicked
+
+		colorChoices();
+		arrangeDivs();
+
+		// also scroll to top
+		$('html, body').animate({ scrollTop: 0 }, 'fast');
+	});
+
+	// user clicks on "abstract button for some paper
+	$(".abstr").click(function() {
+		var pid = parseInt($(this).attr('id').substring(2)); // id of the paper clicked
+		var aurl = "abstracts/a" + pid + ".txt";
+		var holderdiv = "#abholder" + pid;
+
+		if($(holderdiv).is(':visible')) {
+
+			$(holderdiv).slideUp(); // hide the abstract away
+
+		} else {
+
+			// do ajax request and fill the abstract div with the result
+			$.ajax({
+	            url : aurl,
+	            dataType: "text",
+	            success : function (data) {
+	                $(holderdiv).html(data);
+	                $(holderdiv).slideDown();
+	            }
+	        });
+		}
+	});
+});
+
+</script>
+
+</head>
+
+<body>
+
+<div id ="titdiv">
+<h1>CVPR 2013 - Action Recognition Papers</h1>
+maintained by <a href="http://www.colinlea.com">Colin Lea</a><br/>
+adapted from <a href="https://twitter.com/karpathy">@karpathy</a>'s <a href="http://cs.stanford.edu/people/karpathy/nipspreview/">NIPS 2012 guide</a> <br/> <span style="padding-left:67px"> and <a href="https://twitter.com/benhamner">@benhamner</a>'s <a href="http://benhamner.com/icml2013preview/">ICML 2013 guide</a></span><br/>
+source code on <a href="https://github.com/colincsl/cvpr2013papers">github</a><br />
+data from <a href="http://www.cv-foundation.org/openaccess/CVPR2013.py">here</a>
+</div>
+
+<div id="maindiv">
+<!-- <div id="explanation">Below every paper are the 100 most frequently used words in that paper. The color is based on an LDA topic model with k = 7.<br/>  -->
+<div id="explanation">The 100 most frequent words in each paper are listed below each entry. Color is based on an LDA topic model with k = 7.<br />
+	<!-- <div style="font-size: 14px;">(Roughly, topic 0 = discriminative, 1 = multimodal, 2 = structure/hierarchy, 3 = interactions, 4 = features, 5 = sequences, 6 = attributes) </div> -->
+</div>
+<div id="sortoptions">
+<!-- Toggle LDA topics to sort by: -->
+Toggle the topics below to sort by (rough) category:<br/><br/>
+
+<span class="topicchoice t0" id="tc0">(0) discriminative</span>
+<span class="topicchoice t1" id="tc1">(1) multimodal</span>
+<span class="topicchoice t2" id="tc2">(2) structure/hierarchy</span>
+<span class="topicchoice t3" id="tc3">(3) interactions</span>
+<span class="topicchoice t4" id="tc4">(4) features</span>
+<span class="topicchoice t5" id="tc5">(5) sequences</span>
+<span class="topicchoice t6" id="tc6">(6) attributes</span>
+</div>
+
+<!-- the keyword below will be replaced by content from the python script generatenice.py -->
+<div id="rtable">
+
+
+	<div class="apaper" id="pid0">
+	<div class="paperdesc">
+		<span class="ts">HON4D: Histogram of Oriented 4D Normals for Activity Recognition from Depth Sequences</span><br />
+		<span class="as">Omar Oreifej, Zicheng Liu</span><br />
+		<span class="keywords">Keywords: Activity Recognition, Kinect, Action Recognition, Histogram of Gradients, HOG, Histogram of Normals, HON, 4D Normals, Polychoron, MSR Action 3D, MSR Action Pairs, MSR Daily Activity, Depth, Shape, 4D, 3D</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Oreifej_HON4D_Histogram_of_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim0">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab522678274">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Oreifej_HON4D_Histogram_of_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder522678274"></div>-->
+	<span class="tt">[<span class="t0">action, discriminative, space, box, spatiotemporal, distribution, accuracy, capture, human, figure, joint, feature, gesture, holistic, svm, pyramid, training</span>] [<span class="t1">shape, corresponding, note, consider</span>] [<span class="t2">recognition, previous, proposed, spatial, video, oriented, global</span>] [<span class="t3">sequence, number, unit</span>] [<span class="t4">depth, surface, normal, motion, orientation, histogram, descriptor, dataset, compute, order, gradient, skeleton, density, msr, local, computed, quantization, chair, poster, backpack, hat, lop, table, interest, jiang, occupancy, random, described, quantize, higher, compared, dollar, hog, better, place, outperforms</span>] [<span class="t5">temporal, experiment, based, color, selected, performance, regular</span>] [<span class="t6">activity, method, set, example, object, hand, compare</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid1">
+	<div class="paperdesc">
+		<span class="ts">Modeling Actions through State Changes</span><br />
+		<span class="as">Alireza Fathi, James M. Rehg</span><br />
+		<span class="keywords">Keywords: Action Recognition, State, Object, Smi-Supervised Learning, Egocentric</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Fathi_Modeling_Actions_through_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim1">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab202215044">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Fathi_Modeling_Actions_through_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder202215044"></div>-->
+	<span class="tt">[<span class="t0">action, model, training, svm, accuracy, figure, trained, feature, class, detection</span>] [<span class="t1">linear, corresponding, objective, learn</span>] [<span class="t2">recognition, video, previous, represent, test, segment, cluster</span>] [<span class="t3">describe, second, sequence</span>] [<span class="t4">order, performed, bag, vector, motion</span>] [<span class="t5">based, detector, result</span>] [<span class="t6">state, method, object, activity, coffee, open, region, set, frame, change, bread, recognizing, close, spoon, segmentation, pour, correspond, final, initial, interval, compare, fig, cup, environment, material, appearance, response, daily, train, introduce, instance, build, jelly, recognize, consistently, water, classifier, cheese, sugar, hand, spread, iien, iist, peanut, consistent, changed, apply, scoop, ffe, identifies, jar, jam</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid2">
+	<div class="paperdesc">
+		<span class="ts">Representing Videos Using Mid-level Discriminative Patches</span><br />
+		<span class="as">Arpit Jain, Abhinav Gupta, Mikel Rodriguez, Larry S. Davis</span><br />
+		<span class="keywords">Keywords: Action Recognition, Video Understanding</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Jain_Representing_Videos_Using_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim2">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab747343624">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Jain_Representing_Videos_Using_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder747343624"></div>-->
+	<span class="tt">[<span class="t0">action, discriminative, training, class, approach, figure, human, select, transfer, patch, detection, feature, correspondence, vocabulary, strong, establish, olympics, representative, svm, spatiotemporal, simple, align, cost, establishing, score, euclidean, pose, trained, propose, ipfp, localization, representing, partition</span>] [<span class="t1">data, learn, demonstrate, algorithm</span>] [<span class="t2">video, test, recognition, represent, cluster, alignment, clustering, global, evaluate, throw</span>] [<span class="t3">learning, semantic, number, top, function, nearest, constituent</span>] [<span class="t4">motion, dataset, table, vector, query, background</span>] [<span class="t5">representation, based, performance, selected, term, selection, temporal, event, evaluation, perform, candidate</span>] [<span class="t6">object, label, distance, set, work, recognizing, consistent, appearance</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid3">
+	<div class="paperdesc">
+		<span class="ts">Evaluation of Color STIPs for Human Action Recognition</span><br />
+		<span class="as">Ivo Everts, Jan C. van_Gemert, Theo Gevers</span><br />
+		<span class="keywords">Keywords: action recognition, color, evaluation</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Everts_Evaluation_of_Color_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim3">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab659402510">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Everts_Evaluation_of_Color_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder659402510"></div>-->
+	<span class="tt">[<span class="t0">action, human, discriminative, detection, ucf, accuracy, feature</span>] [<span class="t1">image, consider, single, represented, note</span>] [<span class="t2">recognition, video, codebook, achieved, spatial, scene</span>] [<span class="t3">level, function, number</span>] [<span class="t4">descriptor, gradient, local, table, dataset, extracted, best, higher, motion, scale, vector, average</span>] [<span class="t5">stip, color, stips, photometric, gabor, performance, based, harris, intensity, chromatic, representation, temporal, associated, detector, invariant, repeatability, combination, evaluation, energy, considering, reported, channel, typically, invariance, signal, dimensionality, full, outperform, differential, result, tensor, integration, power, opponent, focus, opposing, bank, quality</span>] [<span class="t6">recognizing, object, frame, response, set</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid4">
+	<div class="paperdesc">
+		<span class="ts">Event Recognition in Videos by Learning from Heterogeneous Web Sources</span><br />
+		<span class="as">Lin Chen, Lixin Duan, Dong Xu</span><br />
+		<span class="keywords">Keywords: Domain Adaptation, Event Recognition</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Chen_Event_Recognition_in_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim4">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab433244944">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Chen_Event_Recognition_in_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder433244944"></div>-->
+	<span class="tt">[<span class="t0">training, svm, feature, propose, model, action, trained, human</span>] [<span class="t1">domain, source, target, data, adaptation, web, consumer, problem, heterogeneous, multiple, labeled, view, image, optimization, learn, existing, optimal, unlabeled, ccv, algorithm, setting, youtube, represented, visual, solving, note, dso, objective, learnt, kodak, regularizer, max, type, sift, mkl, sample, single, matrix, assume, effectively, cope, bing, effectiveness, infer, solve, convex, leveraging</span>] [<span class="t2">recognition, video, kernel, proposed, task, simultaneously</span>] [<span class="t3">learning, number, relevant, three, function</span>] [<span class="t4">dataset, vector, large, datasets, report</span>] [<span class="t5">event, based, performance</span>] [<span class="t6">method, set, work, weight, label, well, min</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid5">
+	<div class="paperdesc">
+		<span class="ts">Multi-task Sparse Learning with Beta Process Prior for Action Recognition</span><br />
+		<span class="as">Chunfeng Yuan, Weiming Hu, Guodong Tian, Shuang Yang, Haoran Wang</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Yuan_Multi-task_Sparse_Learning_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim5">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab185806097">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Yuan_Multi-task_Sparse_Learning_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder185806097"></div>-->
+	<span class="tt">[<span class="t0">action, feature, model, human, training, ucf, kth, error, svm, class, approach, joint, distribution, figure, improve, employ, discriminative, propose</span>] [<span class="t1">single, sample, visual, multiple, data, image, sift, matrix</span>] [<span class="t2">sparse, dictionary, task, recognition, video, proposed, sparsity, beta, prior, process, mtsl, test, posterior, learned, bayesian, represent, reconstruction, residual, common, geometric, symbolized, follow, shared, jth, swinging, gibbs, gamma, norm, expressed</span>] [<span class="t3">learning, individual, function, level, number</span>] [<span class="t4">local, histogram, sampling, table, vector, comparison, compared, descriptor, performed, average, combined, interest, density, listed</span>] [<span class="t5">representation, combination, based, associated, performance, formulation, total</span>] [<span class="t6">method, set, initial, jointly, inference</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid6">
+	<div class="paperdesc">
+		<span class="ts">Story-Driven Summarization for Egocentric Video</span><br />
+		<span class="as">Zheng Lu, Kristen Grauman</span><br />
+		<span class="keywords">Keywords: video summarization, egocentric, story</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Lu_Story-Driven_Summarization_for_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim6">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab274713476">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Lu_Story-Driven_Summarization_for_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder274713476"></div>-->
+	<span class="tt">[<span class="t0">approach, figure, score, capture, select, model</span>] [<span class="t1">visual, camera, objective, multiple, data, path</span>] [<span class="t2">video, scene, baseline, long</span>] [<span class="t3">summarization, input, three, number, measure, individual, text</span>] [<span class="t4">sampling, motion, compute, computed, random</span>] [<span class="t5">subshots, egocentric, chain, subshot, summary, story, selected, diversity, user, based, novel, uniform, total, good, news, adl, ute, term, event, quality, selection, metric, study, queue, making, priority, progress, color, coherent, keyframes, connecting, include, activation, temporal, generate, boundary, key, candidate, selecting, approximate, form</span>] [<span class="t6">method, object, set, work, original, graph, segmentation, well, activity, frame, daily, example, pattern</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid7">
+	<div class="paperdesc">
+		<span class="ts">Context-Aware Modeling and Recognition of Activities in Video</span><br />
+		<span class="as">Yingying Zhu, Nandita M. Nayak, Amit K. Roy-Chowdhury</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Zhu_Context-Aware_Modeling_and_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim7">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab355749020">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Zhu_Context-Aware_Modeling_and_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder355749020"></div>-->
+	<span class="tt">[<span class="t0">model, action, feature, figure, approach, human, space, training</span>] [<span class="t1">algorithm, continuous, problem, framework, image, matrix</span>] [<span class="t2">recognition, baseline, spatial, video, recall, precision, proposed, learned, scene</span>] [<span class="t3">detected, time, number, agent, learning, function, group, duration</span>] [<span class="t4">motion, vector, interest, dataset, complex, size</span>] [<span class="t5">temporal, modeling, based, representation, event</span>] [<span class="t6">activity, context, person, release, virat, structural, method, frame, defined, region, object, segmentation, inference, nth, work, example, classifier, moving, vehicle, label, potential, greedy, distance, set, search, optimum, recognized, tcij, scij, graph, jointly, normalized, compatibility, developed, recognizing, computer, weight, incorrectly</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid8">
+	<div class="paperdesc">
+		<span class="ts">Watching Unlabeled Video Helps Learn New Human Actions from Very Few Labeled Snapshots</span><br />
+		<span class="as">Chao-Yeh Chen, Kristen Grauman</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Chen_Watching_Unlabeled_Video_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim8">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab536368293">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Chen_Watching_Unlabeled_Video_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder536368293"></div>-->
+	<span class="tt">[<span class="t0">training, pose, action, human, body, figure, approach, accuracy, space, class, stanford, riding, svm, feature, bounding</span>] [<span class="t1">unlabeled, data, labeled, domain, adaptation, image, learn, source, people, note</span>] [<span class="t2">video, recognition, test, prior, idea, baseline, learned</span>] [<span class="t3">learning, system, additional, number, small, nearest, annotation, relevant, function</span>] [<span class="t4">motion, real, dataset, hollywood, impact, datasets</span>] [<span class="t5">novel, representation, based, poselet, account, generate, generic, poselets</span>] [<span class="t6">set, synthetic, static, method, activity, manifold, original, pav, pascal, object, person, neighbor, train, label, augment, work, extrapolate, appearance, map, category, denote, expand, lle, nonlinear, explore, example, well</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid9">
+	<div class="paperdesc">
+		<span class="ts">Poselet Key-Framing: A Model for Human Activity Recognition</span><br />
+		<span class="as">Michalis Raptis, Leonid Sigal</span><br />
+		<span class="keywords">Keywords: Activity Recognition, Discriminative Keyframes, Video Analysis</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Raptis_Poselet_Key-Framing_A_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim9">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab435255560">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Raptis_Poselet_Key-Framing_A_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder435255560"></div>-->
+	<span class="tt">[<span class="t0">model, action, human, discriminative, detection, pose, localization, bounding, training, accuracy, scoring, score, approach, capture, box, figure, feature, propose, holistic</span>] [<span class="t1">framework, image, algorithm</span>] [<span class="t2">video, recognition, proposed, spatial, test, structure, dynamic, indicates</span>] [<span class="t3">latent, learning, pairwise, function, number, positive, sequence, detected, rate, semantic, second</span>] [<span class="t4">hog, local, average, motion, table, descriptor</span>] [<span class="t5">temporal, keyframes, poselets, poselet, unary, representation, based, bow, keyframe, performance, approachperson, partial, key, entire, selected, legsextended, activation, modeling, temporally, streaming, rely, focus, allows, spatially, selection, ability, localize</span>] [<span class="t6">set, activity, frame, method, static, recognizing</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid10">
+	<div class="paperdesc">
+		<span class="ts">3D Visual Proxemics: Recognizing Human Interactions in 3D from a Single Image</span><br />
+		<span class="as">Ishani Chakraborty, Hui Cheng, Omar Javed</span><br />
+		<span class="keywords">Keywords: Visual Proxemics, 3D people layout, semantic constraints, RANSAC</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Chakraborty_3D_Visual_Proxemics_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim10">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab398905781">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Chakraborty_3D_Visual_Proxemics_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder398905781"></div>-->
+	<span class="tt">[<span class="t0">model, figure, human, pose, estimation, feature, space, detection, approach, capture</span>] [<span class="t1">camera, people, face, visual, height, image, proxemics, layout, outlier, estimate, shape, consider, constraint, ransac, single, shot, ground, crowd, perspective, linear, plane, proxemes, framework, proxeme, robust, position, photo, estimated, visibility, center, family, location, audience, horizon, rectification, classification, type, derived, typical</span>] [<span class="t2">spatial, proposed, indicates</span>] [<span class="t3">group, interaction, social, semantic, number, analysis, detected, detect, level</span>] [<span class="t4">depth, table, described, size, average, compute, dataset, vector, better, standard</span>] [<span class="t5">based, performance</span>] [<span class="t6">set, distance, method</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid11">
+	<div class="paperdesc">
+		<span class="ts">Expanded Parts Model for Human Attribute and Action Recognition in Still Images</span><br />
+		<span class="as">Gaurav Sharma, Frdric Jurie, Cordelia Schmid</span><br />
+		<span class="keywords">Keywords: human analysis, part-based, discriminative, margin maximization, expanded parts, attributes, human</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Sharma_Expanded_Parts_Model_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim11">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab288222902">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Sharma_Expanded_Parts_Model_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder288222902"></div>-->
+	<span class="tt">[<span class="t0">human, model, discriminative, training, scoring, action, pose, class, bof, feature, propose, score, spm, figure, willow, patch, stanford, expanded, current, attribute, explain, approach, detection, estimation, qualitative, validation, bounding, template, trained, distribution</span>] [<span class="t1">image, learnt, learn, corresponding, algorithm, data, linear, optimization, sift</span>] [<span class="t2">recognition, baseline, spatial, proposed, norm, partially, test</span>] [<span class="t3">learning, number, function, high, positive, collection, three, row, latent</span>] [<span class="t4">database, large, better, best, sampling, dataset, vector</span>] [<span class="t5">based, performance, full, representation, loss, good, associated, component</span>] [<span class="t6">method, object, context, map, work, appearance, train, recognizing, set, well, stochastic, example</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid12">
+	<div class="paperdesc">
+		<span class="ts">Decoding Children's Social Behavior</span><br />
+		<span class="as">James M. Rehg, Gregory D. Abowd, Agata Rozga, Mario Romero, Mark A. Clements, Stan Sclaroff, Irfan Essa, Opal Y. Ousley, Yin Li, Chanho Kim, Hrishikesh Rao, Jonathan C. Kim, Liliana Lo Presti, Jianming Zhang, Denis Lantsman, Jonathan Bidwell, Zhefan Ye</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Rehg_Decoding_Childrens_Social_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim12">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab650135107">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Rehg_Decoding_Childrens_Social_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder650135107"></div>-->
+	<span class="tt">[<span class="t0">detection, feature, accuracy, approach, training, error, trained, figure, score</span>] [<span class="t1">face, estimate, camera, domain</span>] [<span class="t2">behavior, video, recognition, detecting, prediction, clip</span>] [<span class="t3">child, ball, social, examiner, book, play, analysis, interaction, engagement, audio, gaze, stage, smile, number, dyadic, touched, adult, eye, experimental, speech, tracker, structured, additional, head, multimodal, tickle, decoding, detected, parsing, detect, duration, true, autism, predicting, tool, predicted, developmental, georgia, discrete, degree, positive, measure, mmdb, false, testing, kinect, identify</span>] [<span class="t4">table, dataset, order, extracted, combined, hat</span>] [<span class="t5">based, event, key, assessment, performance</span>] [<span class="t6">activity, set, goal, work, tracking, introduce, predict, object, attention, context</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid13">
+	<div class="paperdesc">
+		<span class="ts">An Approach to Pose-Based Action Recognition</span><br />
+		<span class="as">Chunyu Wang, Yizhou Wang, Alan L. Yuille</span><br />
+		<span class="keywords">Keywords: pose estimation, action recognition, feature learning</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Wang_An_Approach_to_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim13">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab310583350">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Wang_An_Approach_to_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder310583350"></div>-->
+	<span class="tt">[<span class="t0">pose, action, body, joint, human, figure, estimation, mining, approach, gesture, keck, model, accuracy, ucf, training, holistic, sport, transaction, left, contrast, discriminative, art, capture, frequently, call, challenging, turn, going, mine, growth, compose, pursue</span>] [<span class="t1">data, image, estimated, represented, camera, extract, estimate, location, learn</span>] [<span class="t2">recognition, video, proposed, spatial, represent, dictionary, intersection</span>] [<span class="t3">three, rate, high, detect</span>] [<span class="t4">motion, local, dataset, support, table, comparison, described, vector</span>] [<span class="t5">temporal, performance, based, representation, color, quantized</span>] [<span class="t6">method, set, state, work, frame, appearance, apply, compare</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid14">
+	<div class="paperdesc">
+		<span class="ts">Hollywood 3D: Recognizing Actions in 3D Natural Scenes</span><br />
+		<span class="as">Simon Hadfield, Richard Bowden</span><br />
+		<span class="keywords">Keywords: action recognition, 3d, actions, hollywood, depth, stereo, 3.5d, 4d, interest points</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Hadfield_Hollywood_3D_Recognizing_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim14">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab288387063">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Hadfield_Hollywood_3D_Recognizing_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder288387063"></div>-->
+	<span class="tt">[<span class="t0">action, feature, detection, aware, approach, human, training</span>] [<span class="t1">data, visual, image, calculated, camera, gaussian</span>] [<span class="t2">recognition, natural, video, spatial, precision, sparse, test</span>] [<span class="t3">number, detected, measure, relative, additional, correct</span>] [<span class="t4">interest, depth, point, descriptor, saliency, rmd, bag, equation, hessian, standard, extended, including, motion, average, threshold, dataset, performed, hollywood, local, histogram, large, salient, extracted, provided, separable, table, laptev, dense, stream, provide, order, paper, greater, content, sampling, background, integral, datasets, prove, better</span>] [<span class="t5">harris, based, intensity, temporal, performance, range, combination</span>] [<span class="t6">appearance, work, example, state, structural, well</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid15">
+	<div class="paperdesc">
+		<span class="ts">Better Exploiting Motion for Better Action Recognition</span><br />
+		<span class="as">Mihir Jain, Herv Jgou, Patrick Bouthemy</span><br />
+		<span class="keywords">Keywords: action recognition, motion compensation, affine motion, kinematic features, VLAD</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Jain_Better_Exploiting_Motion_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim15">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab159565132">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Jain_Better_Exploiting_Motion_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder159565132"></div>-->
+	<span class="tt">[<span class="t0">action, human, model, feature, approach, accuracy, bof, figure, art, svm</span>] [<span class="t1">camera, image, consider, visual, corresponding, existing, note, horizontal</span>] [<span class="t2">recognition, video, optical, dominant, volume, proposed, global, residual, codebook</span>] [<span class="t3">combining, additional</span>] [<span class="t4">motion, descriptor, local, computed, vlad, table, hof, trajectory, compensated, kinematic, mbh, impact, computation, vector, hog, technique, large, better, compensation, dense, point, dataset, improves, improvement, curl, average, compute, complementary, shear, background, scalar, olympic, paper, best, interest, sake, introduced, involved</span>] [<span class="t5">encoding, performance, combination, reported, encode, representation, scheme, based</span>] [<span class="t6">tracking, method, set, state, moving, introduce, pattern, map</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid16">
+	<div class="paperdesc">
+		<span class="ts">Spatio-temporal Depth Cuboid Similarity Feature for Activity Recognition Using Depth Camera</span><br />
+		<span class="as">Lu Xia, J.K. Aggarwal</span><br />
+		<span class="keywords">Keywords: Spatio temporal interest point, depth image, activity recognition, Kinect</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Xia_Spatio-temporal_Depth_Cuboid_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim16">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab886194254">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Xia_Spatio-temporal_Depth_Cuboid_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder886194254"></div>-->
+	<span class="tt">[<span class="t0">feature, action, human, figure, accuracy, joint, denotes, body, detection, training</span>] [<span class="t1">algorithm, image, location, extract, data, position, existing</span>] [<span class="t2">recognition, video, pixel, spatial, volume, test</span>] [<span class="t3">number, function, similarity, describe, experimental, second</span>] [<span class="t4">depth, cuboid, local, rgb, interest, noise, dstip, dcsf, descriptor, nxy, size, point, dataset, histogram, better, correction, dstips, real, scale, skeleton, posture, skeletal, appear, table, extracted, background, voxels, magnitude, occupancy, movement, extraction, adaptable, comparison, average</span>] [<span class="t5">detector, stips, based, temporal, stip, signal</span>] [<span class="t6">activity, work, response, computer, object, method, category, build, vision</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid17">
+	<div class="paperdesc">
+		<span class="ts">Recognize Human Activities from Partially Observed Videos</span><br />
+		<span class="as">Yu Cao, Daniel Barrett, Andrei Barbu, Siddharth Narayanaswamy, Haonan Yu, Aaron Michaux, Yuewei Lin, Sven Dickinson, Jeffrey Mark Siskind, Song Wang</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Cao_Recognize_Human_Activities_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim17">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab855979088">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Cao_Recognize_Human_Activities_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder855979088"></div>-->
+	<span class="tt">[<span class="t0">training, human, feature, action, trained, spatiotemporal, class, accuracy, figure, evaluated, overlap</span>] [<span class="t1">problem, multiple, cross</span>] [<span class="t2">video, darpa, recognition, test, observed, mssc, proposed, baseline, sparse, prediction, segment, likelihood, coding, partially, gap, gapfilliing, ratio, recall, mmed, precision, gapfilling, subsequence, long, posterior, length, natural, achieve, short, dynamic, fully, general, evaluate, constructed, construct, mixture, early, presented, unobserved, special, handle, practical, studied</span>] [<span class="t3">observation, three, number, duration, eye, stage</span>] [<span class="t4">better, datasets, comparison, complex, dataset, average, interest, large, vector</span>] [<span class="t5">temporal, performance, evaluation, include, perform, event, full</span>] [<span class="t6">activity, method, frame, recognizing, set, computer, recognized, program</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid18">
+	<div class="paperdesc">
+		<span class="ts">Unconstrained Monocular 3D Human Pose Estimation by Action Detection and Cross-Modality Regression Forest</span><br />
+		<span class="as">Tsz-Ho Yu, Tae-Kyun Kim, Roberto Cipolla</span><br />
+		<span class="keywords">Keywords: Human Pose Estimation, Random Forest, Hough Forest, Regression Forest</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Yu_Unconstrained_Monocular_3D_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim18">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab959093458">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Yu_Unconstrained_Monocular_3D_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder959093458"></div>-->
+	<span class="tt">[<span class="t0">pose, action, human, estimation, detection, regression, joint, forest, wave, training, class, model, feature, body, figure, localisation, ape, accuracy, hpe, dpm, approach, monocular, box, trained, unconstrained, bend, split, articulated, clap, deformable, dance, feasibility, evaluated, current, pictorial, challenging, error, spatiotemporal, knowledge, tree, balance, leaf</span>] [<span class="t1">estimate, image, data, framework, estimated, multiple, ground, infer, corresponding, sample</span>] [<span class="t2">proposed, recognition, structure, video, simultaneously</span>] [<span class="t3">testing, learning, detected, time, kinect, input, high</span>] [<span class="t4">dataset, depth, vector, performed, motion, combined, background, table</span>] [<span class="t5">truth</span>] [<span class="t6">method, node, frame, hand, computer</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid19">
+	<div class="paperdesc">
+		<span class="ts">Detection of Manipulation Action Consequences (MAC)</span><br />
+		<span class="as">Yezhou Yang, Cornelia Fermller, Yiannis Aloimonos</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Yang_Detection_of_Manipulation_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim19">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab20370003">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Yang_Detection_of_Manipulation_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder20370003"></div>-->
+	<span class="tt">[<span class="t0">action, human, model, figure, detection, distribution</span>] [<span class="t1">visual, algorithm, sample, image, target, robust, problem, consider</span>] [<span class="t2">recognition, optical, video, understanding, process, volume, natural, case, proposed, represent, pixel, detecting, segment</span>] [<span class="t3">system, sequence, time, semantic, number</span>] [<span class="t4">point, movement, dataset, motion, sampling, described, depth, provide, order</span>] [<span class="t5">color, based, term, ability, performance</span>] [<span class="t6">segmentation, object, method, tracking, manipulation, set, active, graph, appearance, consequence, tracked, goal, condition, attention, vision, computer, weighted, edge, area, cut, vsg, division, change, intelligent, mac, monitor, initial, stochastic, example, weight, topological, assemble, denote, international, work, monitoring, fundamental, represents, crucial, considered</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid20">
+	<div class="paperdesc">
+		<span class="ts">First-Person Activity Recognition: What Are They Doing to Me?</span><br />
+		<span class="as">Michael S. Ryoo, Larry Matthies</span><br />
+		<span class="keywords">Keywords: human activity recognition, first-person computer vision</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Ryoo_First-Person_Activity_Recognition_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim20">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab106986074">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Ryoo_First-Person_Activity_Recognition_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder106986074"></div>-->
+	<span class="tt">[<span class="t0">human, figure, training, approach, detection, feature, wave, pyramid</span>] [<span class="t1">optimal, continuous, multiple, camera, visual, target, matrix</span>] [<span class="t2">structure, kernel, video, recognition, global, match, optical, hug, pet, observer, advantage, superior, alignment, baseline, previous, represent, punch, robot, shake, observed, constructed, humanoid, throw, version, punching, idea, measured, subsection, learned, arg, considers, evaluate</span>] [<span class="t3">system, learning, function, number, hierarchical, time, detected, matching, positive</span>] [<span class="t4">motion, local, histogram, dataset, paper, order, better, average, best, descriptor, computed, point</span>] [<span class="t5">temporal, gram, evaluation, representation, performance, based, result, ability</span>] [<span class="t6">activity, distance, example, person, recognizing, recognize</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid21">
+	<div class="paperdesc">
+		<span class="ts">Finding Group Interactions in Social Clutter</span><br />
+		<span class="as">Ruonan Li, Parker Porfilio, Todd Zickler</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Li_Finding_Group_Interactions_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim21">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab475982174">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Li_Finding_Group_Interactions_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder475982174"></div>-->
+	<span class="tt">[<span class="t0">approach, detection, localization, action, figure, accuracy, bounding</span>] [<span class="t1">optimal, consider, matrix, problem, labeled, framework, single</span>] [<span class="t2">video, detecting, recognition, long, ensemble, proposed, evaluate, represent</span>] [<span class="t3">interaction, matching, exemplar, time, pairwise, input, group, individual, social, three, unit, agent, number, false, detected, system, localizing, positive, occur, small, relative, learning, similarity, collection, annotated, measure, distinctive, larger, matched, instantaneous, localized, neighborhood, wnm, voting, simply, lowest</span>] [<span class="t4">descriptor, best, compute, large, table, report, described, database, dataset, average</span>] [<span class="t5">temporal, metric, performance, representation, based, selected</span>] [<span class="t6">interval, search, tracking, category, set</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid22">
+	<div class="paperdesc">
+		<span class="ts">Online Dominant and Anomalous Behavior Detection in Videos</span><br />
+		<span class="as">Mehrsan Javan Roshtkhari, Martin D. Levine</span><br />
+		<span class="keywords">Keywords: Surveillance, Video parsing, Hierarchical scene modeling, Behavior learning, Anomaly detection, Bag of video words, Contextual information, Spatio-Temporal compositions</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Roshtkhari_Online_Dominant_and_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim22">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab276006160">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Roshtkhari_Online_Dominant_and_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder276006160"></div>-->
+	<span class="tt">[<span class="t0">detection, approach, model, figure, space, spatiotemporal, template</span>] [<span class="t1">algorithm, consider, represented, sample, data, learnt</span>] [<span class="t2">video, dominant, spatial, behavior, scene, pixel, abnormal, ensemble, stvs, detecting, online, abnormality, clustering, anomalous, understanding, codebook, construct, oriented, proposed, volume, optical, contextual, capable, behaviour, achieved, pdf, cluster, fuzzy, probabilistic, employed, anomaly, dynamic, simultaneously, observed, utkt, usks, rare, constructed, employing, bov</span>] [<span class="t3">level, similarity, hierarchical, learning, number, rate, detect, analysis, topic</span>] [<span class="t4">local, background, dataset, order, gradient, described, large, descriptor, performed</span>] [<span class="t5">temporal, based, surveillance</span>] [<span class="t6">method, set, activity, pattern, frame, change</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid23">
+	<div class="paperdesc">
+		<span class="ts">Cross-View Action Recognition via a Continuous Virtual Path</span><br />
+		<span class="as">Zhong Zhang, Chunheng Wang, Baihua Xiao, Wen Zhou, Shuang Liu, Cunzhao Shi</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Zhang_Cross-View_Action_Recognition_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim23">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab744342757">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Zhang_Cross-View_Action_Recognition_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder744342757"></div>-->
+	<span class="tt">[<span class="t0">action, feature, accuracy, correspondence, class, approach, human, training, discriminative, propose, achieves</span>] [<span class="t1">virtual, view, target, labeled, unlabeled, source, path, corresponding, constraint, vvkc, algorithm, multiple, continuous, transformation, domain, ixmas, problem, mode, matrix, robust, discrimination, vvk, maximize, inner, parameter, max, rotation, extract, linear, maximizing, theoretic, gaussian, working, sample, approximated, objective, kau, kat</span>] [<span class="t2">recognition, kernel, partially, proposed, construct, observed, video, learned</span>] [<span class="t3">similarity, three, learning</span>] [<span class="t4">table, better, average, computed, interest, compute, dataset, local, sampling, vector, equation</span>] [<span class="t5">representation, temporal, performance, based, key</span>] [<span class="t6">method, set, work, recognizing, change, pattern</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid24">
+	<div class="paperdesc">
+		<span class="ts">Event Retrieval in Large Video Collections with Circulant Temporal Encoding</span><br />
+		<span class="as">Jrme Revaud, Matthijs Douze, Cordelia Schmid, Herv Jgou</span><br />
+		<span class="keywords">Keywords: large-scale, video retrieval, event retrieval</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Revaud_Event_Retrieval_in_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim24">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab66408316">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Revaud_Event_Retrieval_in_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder66408316"></div>-->
+	<span class="tt">[<span class="t0">detection, approach, figure, pca</span>] [<span class="t1">image, web, domain, single, assumption, visual</span>] [<span class="t2">video, alignment, task, length, proposed, case, presented</span>] [<span class="t3">time, matching, number, similarity, complexity, sequence, small, description, independent</span>] [<span class="t4">database, query, cte, retrieval, fourier, vector, mmv, copy, complex, descriptor, evve, dataset, table, recvid, large, product, frequency, technique, circulant, memory, regularization, paper, concert, quantization, applied, comparison, performed, average, compute, inverse, william, ndcr, wedding, described, shift, averaging, kate, hough, compressed, distractors, size, mapped, compression</span>] [<span class="t5">event, temporal, performance, evaluation, encoding, representation, metric, partial</span>] [<span class="t6">frame, search, method, set, requires, state, compare, well</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid25">
+	<div class="paperdesc">
+		<span class="ts">Action Recognition by Hierarchical Sequence Summarization</span><br />
+		<span class="as">Yale Song, Louis-Philippe Morency, Randall Davis</span><br />
+		<span class="keywords">Keywords: Action Recognition, Hierarchical Model, Conditional Random Fields</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Song_Action_Recognition_by_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim25">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab463371246">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Song_Action_Recognition_by_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder463371246"></div>-->
+	<span class="tt">[<span class="t0">feature, approach, model, action, discriminative, human, figure, training, body, accuracy, joint</span>] [<span class="t1">algorithm, learn, single, data, multiple, optimal, parameter, optimization</span>] [<span class="t2">recognition, length, posterior, previous</span>] [<span class="t3">sequence, learning, hierarchical, latent, summarization, layer, function, observation, gate, super, log, number, grouping, hierarchy, hidden, procedure, deep, armgesture, complexity, similarity, difference, group, natops, experimental, conditional, semantic, three, analysis, variable, wst, second, belief, testing, learns, sublinearly, neural, input, abstract, incremental</span>] [<span class="t4">dataset, local, datasets, equation, order, complex, average, vector</span>] [<span class="t5">representation, temporal, summary, based, performance, result, term</span>] [<span class="t6">set, activity, work, solution, frame, label, original</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid26">
+	<div class="paperdesc">
+		<span class="ts">Spatiotemporal Deformable Part Models for Action Detection</span><br />
+		<span class="as">Yicong Tian, Rahul Sukthankar, Mubarak Shah</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Tian_Spatiotemporal_Deformable_Part_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim26">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab587247345">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Tian_Spatiotemporal_Deformable_Part_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder587247345"></div>-->
+	<span class="tt">[<span class="t0">action, sdpm, detection, spatiotemporal, root, model, deformable, feature, space, cycle, bounding, localization, dpm, ucf, capture, score, volumetric, employ, training, human, variation, ith, pyramid, discriminative, figure, svm, template, box, weizmann, overlap, trained, select, achieves, approach, enable, cell, dpms, automatically</span>] [<span class="t1">corresponding, single</span>] [<span class="t2">video, volume, recognition, learned, test, structure, observed, clip, evaluate, spatial, global</span>] [<span class="t3">number, level, learning, small, positive, time, determined, detect</span>] [<span class="t4">dataset, descriptor, complex, background, large, motion, computed, better, standard, best</span>] [<span class="t5">temporal, selected, performance</span>] [<span class="t6">object, set, train, deformation, appearance, search, example, frame, well</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid27">
+	<div class="paperdesc">
+		<span class="ts">Sampling Strategies for Real-Time Action Recognition</span><br />
+		<span class="as">Feng Shi, Emil Petriu, Robert Laganire</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Shi_Sampling_Strategies_for_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim27">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab971162098">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Shi_Sampling_Strategies_for_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder971162098"></div>-->
+	<span class="tt">[<span class="t0">action, feature, root, model, human, kth, approach, accuracy, patch, training, select, challenging, discriminative, realistic</span>] [<span class="t1">visual, image</span>] [<span class="t2">video, recognition, spatial, kernel, intersection, observed, proposed, structure</span>] [<span class="t3">number, high, three, eye</span>] [<span class="t4">sampling, dense, local, random, sampled, size, table, integral, average, interest, resolution, descriptor, point, background, dataset, half, dimension, speed, density, computation, large, better, grid, histogram, standard, mbh, computationally, report, computational, datasets, codewords, hof, gpu, best, cpu, factor</span>] [<span class="t5">performance, randomly, based, full, total, temporal, uniform, good</span>] [<span class="t6">method, computer, vision, object, set</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid28">
+	<div class="paperdesc">
+		<span class="ts">Bilinear Programming for Human Activity Recognition with Unknown MRF Graphs</span><br />
+		<span class="as">Zhenhua Wang, Qinfeng Shi, Chunhua Shen, Anton van_den_Hengel</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Wang_Bilinear_Programming_for_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim28">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab459679095">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Wang_Bilinear_Programming_for_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder459679095"></div>-->
+	<span class="tt">[<span class="t0">human, model, figure, body, error, feature, joint, discriminative, training, svm, action</span>] [<span class="t1">problem, solve, consider, solving, image, data, coordinate, max, estimate</span>] [<span class="t2">recognition, video, global, prediction</span>] [<span class="t3">function, relative, learning, group, predicting, second, belief, degree, latent, observation</span>] [<span class="t4">local, dataset, datasets, vector, descriptor, outperforms, random, table</span>] [<span class="t5">based, energy</span>] [<span class="t6">graph, method, bilinear, map, activity, blp, inference, mrf, unknown, program, relaxation, label, branch, bound, solution, min, node, pattern, person, mcsvm, qinit, mrfs, set, badminton, edge, har, ssvm, predict, structural, green, confusion, ascent, tennis, optimisation, synthetic, apply, work, style, isolate, vision, computer</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid29">
+	<div class="paperdesc">
+		<span class="ts">Augmenting Bag-of-Words: Data-Driven Discovery of Temporal and Structural Information for Activity Recognition</span><br />
+		<span class="as">Vinay Bettadapura, Grant Schindler, Thomas Ploetz, Irfan Essa</span><br />
+		<span class="keywords">Keywords: Activity Recognition, Anomaly Detection, Bag of Words, Skill Assessment, Surveillance, Video</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Bettadapura_Augmenting_Bag-of-Words_Data-Driven_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim29">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab697522040">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Bettadapura_Augmenting_Bag-of-Words_Data-Driven_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder697522040"></div>-->
+	<span class="tt">[<span class="t0">figure, human, approach, model, space, training, action, capture, pyramid</span>] [<span class="t1">data</span>] [<span class="t2">recognition, video, baseline, structure, global, behavior, represent, cluster</span>] [<span class="t3">time, sequence, learning, second, duration, three, analysis, semantic</span>] [<span class="t4">local, standard, table, dataset, histogram, order, random, complex, datasets, vector</span>] [<span class="t5">bow, temporal, event, observable, encoding, augmented, regular, based, randomly, elapsed, sequential, skill, quantized, assessment, soccer, unsupervised, interspersed, surveillance, surgical, representation, statistical, evaluation, ordering, automatic, consecutive, modeling, ocean, generated, waas, total, main, player, outperform, cumulative, underlying</span>] [<span class="t6">activity, set, structural, recognizing, method, vehicle, augment, example</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid30">
+	<div class="paperdesc">
+		<span class="ts">A Thousand Frames in Just a Few Words: Lingual Description of Videos through Latent Topics and Sparse Object Stitching</span><br />
+		<span class="as">Pradipto Das, Chenliang Xu, Richard F. Doell, Jason J. Corso</span><br />
+		<span class="keywords">Keywords: video to text, video understanding, multimodal topic model, natural language</span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Das_A_Thousand_Frames_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim30">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab537645052">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Das_A_Thousand_Frames_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder537645052"></div>-->
+	<span class="tt">[<span class="t0">human, model, training, template, detection, action, feature, figure, approach</span>] [<span class="t1">visual, image, data</span>] [<span class="t2">video, natural, test, recall, precision, short</span>] [<span class="t3">topic, concept, level, language, lingual, low, description, system, man, number, middle, semantic, woman, top, cooking, keywords, sentence, high, output, latent, text, tripartite, group, mmlda, rock, relevant, generating, lower, predicted, rouge, trecvid, bacon, town, word, hall, pan, three, metal, annotation, small, corpus, ranked</span>] [<span class="t4">dataset, table, large, average</span>] [<span class="t5">event, based, color, evaluation</span>] [<span class="t6">set, object, person, method, graph, work, vision, computer</span>] </span>
+	</div>
+
+	
+
+	<div class="apaper" id="pid31">
+	<div class="paperdesc">
+		<span class="ts">3D R Transform on Spatio-temporal Interest Points for Action Recognition</span><br />
+		<span class="as">Chunfeng Yuan, Xi Li, Weiming Hu, Haibin Ling, Stephen Maybank</span><br />
+		<span class="keywords">Keywords: </span><br /><br />
+	</div>
+	<div class="dllinks">
+		<a href="http://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Yuan_3D_R_Transform_2013_CVPR_paper.pdf">[pdf] </a>
+		<span class="sim" id="sim31">[rank by tf-idf similarity to this]</span><br />
+		<!--<span class="abstr" id="ab364295679">[abstract]</span>-->
+	</div>
+	<img src = "thumbs/Yuan_3D_R_Transform_2013_CVPR_paper.pdf.jpg"><br />
+	<!--<div class = "abstrholder" id="abholder364295679"></div>-->
+	<span class="tt">[<span class="t0">feature, transform, fusion, action, bovw, kth, radon, distribution, approach, sin, pca, ucf, geometrical, figure, propose, human, accuracy, svm, achieves, spatiotemporal, employ, model, aware, denotes, supported, discriminative, science</span>] [<span class="t1">matrix, visual, parameter, effectiveness, robust, position</span>] [<span class="t2">kernel, video, recognition, proposed, global, calculation, contextual, combine, test, codebook, achieve, represent, referred</span>] [<span class="t3">similarity, discrete, number, detected, pairwise, second, function, describe, nearest</span>] [<span class="t4">interest, local, point, average, higher, table, computed, compute, dataset, extracted, vector, cuboid</span>] [<span class="t5">based, representation, evaluation, form, invariant, performance, perform</span>] [<span class="t6">context, method, object, set, apply, computer, normalized, work</span>] </span>
+	</div>
+
+	
+</div>
+
+</div>
+
+<br /><br /><br /><br /><br /><br />
+</body>
+
+</html>
