@@ -24,8 +24,8 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var link_strength_default = 1
-    charge_strength_default = -100
+var link_strength_default = 0
+    charge_strength_default = 0;
 var width = 800,
     height = 600
     circle_radius = 10
@@ -41,7 +41,7 @@ var links = [];
 var link_strengths = [];
 var charge_strengths = [];
 var circle_radii = [];
-var node_d3, link_d3, graph_d3, tooltip_3d;
+var node_d3, link_d3, graph_d3, tooltip_3d, keywords_3d, node_d3_text;
 
 
 // Push cluster centers to points in a circle around the center of the window
@@ -52,9 +52,8 @@ for (var i=0; i<n_foci; i++)
   foci.push( {x:width/3*Math.cos(i/n_foci*2*Math.PI)+width/2, y:height/3*Math.sin(i/n_foci*2*Math.PI)+height/2 } );
   foci_orig.push(foci[i]);
 }
-// console.log(foci);
 
-
+// Intialize forces
 var force = d3.layout.force()
     .charge( function(d) 
       { 
@@ -62,12 +61,14 @@ var force = d3.layout.force()
       } )
     .linkDistance( function(d) 
         { 
-          return 20;
+          return 50;
         } )    
     .linkStrength( function(d) 
         { 
           return link_strengths[d.source.index]
         } )
+    .gravity(0)
+    .friction(.6)
     .size([width, height]);
 
 
@@ -95,7 +96,8 @@ function redraw() {
     svg.attr("transform", "translate(" + screen_translate + ")" + 
                           " scale(" + screen_scale + ")");
     svg.selectAll(".node").attr("r", 
-      function(d) {return circle_radii[d.index] / screen_scale});
+      function(d) {return circle_radius / screen_scale});
+      // function(d) {return circle_radii[d.index] / screen_scale});
     svg.selectAll(".link").style("stroke-width", link_width/screen_scale);
 }
 
@@ -115,22 +117,24 @@ function update_nodes(graph) {
   
   graph.links.forEach( function(o,i) 
   {
-    if (selected_group==-1) {
+    if (selected_group==-1 || ( o.source.group == selected_group && o.target.group == selected_group)) {
       links.push(o);
-    } else if ( o.source.group == selected_group ) { 
-        links.push(o);
-        nodes.push(graph.nodes[o.target.index]);
-    } else if ( o.target.group == selected_group ) { 
-        links.push(o);
-        nodes.push(graph.nodes[o.source.index]);
-    }
+    } 
+
+    // else if ( o.source.group == selected_group ) { 
+    //     links.push(o);
+    //     nodes.push(graph.nodes[o.target.index]);
+    // } else if ( o.target.group == selected_group ) { 
+    //     links.push(o);
+    //     nodes.push(graph.nodes[o.source.index]);
+    // }
   });
 
   nodes.forEach(function(o, i) 
   {
       link_strengths.push(link_strength_default);
       charge_strengths.push(charge_strength_default);
-      circle_radii.push(circle_radius);
+      circle_radii.push(circle_radius / screen_scale);
   });
 
   svg.selectAll(".node").remove();
@@ -147,18 +151,54 @@ function update_nodes(graph) {
       .style("stroke-width", link_width/screen_scale)
       ;
 
+  nodes.forEach( function(o,i){
+    // console.log(Math.random()*10);
+    o.x = foci[o.group].x + (Math.random()-.5)*50
+    o.y = foci[o.group].y + (Math.random()-.5)*50
+  });
+
+  // node_d3 = svg.selectAll(".node")
+  //     .data(nodes)
+  //     .enter().append("circle")
+  //     .attr("class", "node")
+  //     // .attr("cx", function(d) {return (foci[d.group].x+(Math.random()-.5)*20) })
+  //     // .attr("cy", function(d) {return (foci[d.group].y+(Math.random()-.5)*20) })      
+  //     .attr("r", function(d) {return circle_radii[d.index] / screen_scale})      
+  //     .style("stroke-width", 1)
+  //     .style("fill", function(d) { return color(d.group); });
+
   node_d3 = svg.selectAll(".node")
       .data(nodes)
-      .enter().append("circle")
+      .enter()
+      .append("g")
       .attr("class", "node")
-      .attr("r", function(d) {return circle_radii[d.index] / screen_scale})
-      .style("fill", function(d) { return color(d.group); })       
+
+  node_d3.append("circle")
+      // .attr("r", function(d) {return circle_radii[d.index] / screen_scale})      
+      .attr("r", function(d) {return circle_radius / screen_scale})      
+      .style("stroke-width", 1)
+      .style("fill", function(d) { return color(d.group); });      
+
+  node_d3.append("text")
+      .attr("dx", 0)
+      .attr("dy", 0)
+      .attr("class", "paperTitles")
+      .style("text-anchor", "middle")
+      .style("z-index", "99")
+      .style("text-shadow", "-1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF")
+      .style("font-size","6pt")
+      .style("font-family", "Verdana")
+      .text(function(d) {
+        if (selected_group==-1) {return "";}
+        else {return d.name; }})
+      // else {return d.name+" - "+d.authors; }})
 
   tooltip_3d = d3.select("body")
       .append("div")
       .attr("id", "tooltip")
       .attr("class", "tooltip")
       .style("position", "absolute")
+      .style("text-anchor", "middle")
       .style("z-index", "10")
       .style("text-shadow", "-1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF")
       .style("font-size","18px")
@@ -180,13 +220,15 @@ function update_nodes(graph) {
 // Get data and update graph
 data = d3.json("graph_data.json", function(error, graph) {
   graph_d3 = graph;
+  keywords_3d = graph['keywords'];
   update_nodes(graph);
 });
 
 function tick(e){
     // Push nodes toward their designated focus.
-      var step_size = 1. * e.alpha;
-      if (selected_group != -1) step_size = .01 * e.alpha;
+      var step_size = .2 * e.alpha;
+      if (selected_group != -1) step_size = .1 * e.alpha;
+
 
       nodes.forEach(function(o, i) {
         if (selected_group == -1 || o.group == selected_group)
@@ -195,67 +237,91 @@ function tick(e){
           o.x += (foci[o.group].x - o.x) * step_size;
         }
       });
-    
+      // node_d3.forEach(function(o, i) {
+      //   if (selected_group == -1 || o.group == selected_group)
+      //   {        
+      //     console.log(o);
+      //     o.y += (foci[o.group].y - o.y) * step_size;
+      //     o.x += (foci[o.group].x - o.x) * step_size;
+      //   }
+      // });
+
 
     link_d3.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    node_d3.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });  
+    // node_d3.attr("cx", function(d) { return d.x; })
+    //     .attr("cy", function(d) { return d.y; });  
+
+    node_d3.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+
+    // node_d3_text.attr("cx", function(d) { return d.x; })
+    //     .attr("cy", function(d) { return d.y; });  
+
 };
 
 function mouse_move() {
-  return tooltip_3d.style("top", (d3.event.pageY+5)+"px")
-                  .style("left",(d3.event.pageX-200)+"px");
+  if (selected_group != -1)
+  {
+    return tooltip_3d.style("top", (d3.event.pageY+5)+"px")
+                    .style("left",(d3.event.pageX-200)+"px");
+  } else {
+    return tooltip_3d.style("top", (d3.event.pageY+5)+"px")
+                    .style("left",(d3.event.pageX-100)+"px");
+  }
 };
 function mouse_over(d) {
-  return tooltip_3d.style("visibility", "visible")
-                    .html("<b>"+d.name+"</b><br/>"+d.authors );
+  if (selected_group != -1)
+  {
+    // return tooltip_3d.style("visibility", "visible")
+                    // .html("<b>"+d.name+"</b><br/>"+d.authors );
+  } else {
+    return tooltip_3d.style("visibility", "visible")
+                    .html("Topic "+d.group+": "+keywords_3d[d.group]);
+  }
+  
 };
 
 
 
 function mouse_click(d){
     tooltip_3d.style("visibility", "hidden");
+    if (selected_group==-1) node_d3.style("visibility", "visible")
+    else node_d3.style("visibility", "hidden");
+    
       // Find which group is selected
     var group_i = nodes[d.index].group;
-
-    //Reset foci
-    for (var i=0; i<n_foci; i++)
-      {foci[i] = foci_orig[i]};
 
     // Toggle/change selected group
     if (selected_group == -1) {
       selected_group = group_i;
       foci[group_i] = {x:width/2, y:height/2};
-
-    } else selected_group = -1;
+      link_strength_default = 10
+      charge_strength_default = -100;
+      force.friction(.9)
+    } else {
+      foci[selected_group] = foci_orig[selected_group];
+      selected_group = -1;
+      link_strength_default = 0;
+      charge_strength_default = 0;
+      force.friction(.6)
+    }
       
+    screen_scale = 1.;
+    screen_translate = [0,0]
     update_nodes(graph_d3);
 
-    // Increase the size of the selected node
-    // nodes.forEach(function(o, i) {
-    //   link_strengths[i] = link_strength_default;
-    //   charge_strengths[i] = charge_strength_default;
-    //   // if (i==d.index){
-    //   // // if (o.group==group_i){
-    //   //   circle_radii[i] = circle_radius*1;
-    //   // } else {
-    //   //   circle_radii[i] = circle_radius;
-    //   // }
-    // });
-    
     // Increase the strength of the links around the selected node
-    links.forEach(function(o, i) {
+    // links.forEach(function(o, i) {
       // if (o.source.group == group_i || o.target.group == group_i)
       // {
-        link_strengths[o.source.index] = 0;
-        link_strengths[o.target.index] = 0;
-        charge_strengths[o.source.index] = -15;
-        charge_strengths[o.target.index] = -15;
-
+        // link_strengths[o.source.index] = 0;
+        // link_strengths[o.target.index] = 0;
+        // charge_strengths[o.source.index] = -30;
+        // charge_strengths[o.target.index] = -30;
       // };
       // if (o.source.index == d.index || o.target.index == d.index)
       // {
@@ -264,7 +330,7 @@ function mouse_click(d){
       //   charge_strengths[o.source.index] = 0;//charge_strength_default/100;
       //   charge_strengths[o.target.index] = 0;//charge_strength_default/100;
       // };      
-    });
+    // });
 
     // Refresh with new force at selected node
     force.start();
