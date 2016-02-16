@@ -178,7 +178,7 @@ function update_nodes(graph) {
 // ----------------------------------------------------------
 
 // Get data and update graph
-data = d3.json("graph_data.json", function(error, graph) {
+data = d3.json("graph_data_fixed.json", function(error, graph) {
   graph_d3 = graph;
   update_nodes(graph);
 });
