@@ -70,7 +70,6 @@ text-align:center;
     margin-left:10em;
 }
 
-
 ul.header{
 list-style-type:none;
 /*margin:0;*/
@@ -82,8 +81,8 @@ li.header{
 display:inline;
 text-align:center
 align:center;
-/*padding:1%;*/
-/*margin:1%;*/
+padding:1%;
+margin:1%;
 }
 
 /*a:link#proj{*/
@@ -122,7 +121,16 @@ font-size:4.5em;
 div#bio {
   font-family:"Century Gothic";
   width: 55%;
-  padding:5px;
+  padding:0; 
+  margin:0;  
+}
+
+div#header {
+  font-family:"Century Gothic";
+  width: 55%;
+  padding:0px;
+  margin:0%;
+  display: inline-table;
 }
 
 div#proj, div#sVision, div#sHaptics, div#sRobotics, div#sClasses, div#sOther {
