@@ -3,18 +3,21 @@ background-color:rgb(252,250,241);
 }
 
 h1 {
-font-family:"TW Cen MT";
+font-family: 'Source Sans Pro';
+/*font-family: 'Source Sans Pro', sans-serif;*/
+/*font-family:"TW Cen MT";*/
 color:rgb(215, 134, 69);
 font-size:4.5em;
 }
 h2 {
-font-family:"Century Gothic";
+/*font-family:"Century Gothic";*/
 color:rgb(80,80,135);
 font-size:1.5em;
 text-align:center;
 }
 h3 {
-font-family:"Century Gothic";
+  font-family: 'Source Sans Pro';
+/*font-family:"Century Gothic";*/
 color:rgb(100,100,100);
 font-size:1.2em;
 text-align:justify;
@@ -97,7 +100,7 @@ a:link#nav,a:visited#nav{
 background-color:#E0E0E0;
 color:rgb(230,130,10);
 font-weight:bold;
-font-family:"Century Gothic";
+/*font-family:"Century Gothic";*/
 text-align:center;
 padding:2.5%;
 padding-top:.2em;
@@ -112,7 +115,7 @@ background-color:rgb(252,250,241);
 /**/
 
 div#Title {
-font-family:"TW Cen MT";
+font-family:"Source Sans Pro", sans-serif;
 color:rgb(215, 134, 69);
 vertical-align:top;
 font-size:4.5em;
@@ -157,40 +160,6 @@ div#container {
     border: 0px solid #333;
     border-radius: 15px;
     /*background-color: #ffe;*/
-}
-/*div#row  {
-    display: table-row;
-}
-div#left{
-	display: table-cell;
-
-	padding-left:5%;
-	padding-right:5%;
-	padding-top:0%;
-	padding-bottom:0%;
-	
-	text-align:left;    
-    vertical-align:middle;
-    width: 70%;
-    border: 2px solid #DDD;
-    border-radius: 15px;
-}
-div#right{
-	display: table-cell;
-
-	padding-left:5%;
-	padding-right:5%;
-	padding-top:0%;
-	padding-bottom:0%;
-	
-	text-align:left;    
-    vertical-align:middle;   
-}
-
-img#proj{
-	border-radius: 15px;
-}*/
-
 
 
 div#row  {
